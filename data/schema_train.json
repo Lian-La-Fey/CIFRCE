@@ -1,0 +1,1379 @@
+[
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Findings: No significant fracture line was observed in the cranial bone structures. The fourth ventricle is midline.",
+    "output": [
+      {
+        "abnormality": "fracture",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["cranial bone structures"],
+        "degree": ["significant"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "None",
+        "location": ["fourth ventricle"],
+        "degree": ["midline"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Spleen size is enlarged and measured 134 mm. Spleen parenchymal echogenicity is homogeneous.",
+    "output": [
+      {
+        "abnormality": "enlarged",
+        "finding": "None",
+        "presence": "present",
+        "location": ["spleen"],
+        "degree": ["None"],
+        "measurement": "134 mm",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "present",
+        "location": ["spleen parenchyma"],
+        "degree": ["homogeneous"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "There is a small focal area of decreased attenuation in the liver, possibly representing a cyst. R/O hemangioma.",
+    "output": [
+      {
+        "abnormality": "area of decreased attenuation",
+        "finding": "None",
+        "presence": "present",
+        "location": ["liver"],
+        "degree": ["small", "focal"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "cyst",
+        "finding": "None",
+        "presence": "uncertain",
+        "location": ["liver"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "hemangioma",
+        "finding": "None",
+        "presence": "uncertain",
+        "location": ["liver"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "There is a small focal area of decreased attenuation in the liver, possibly representing a cyst. R/O hemangioma.",
+    "output": [
+      {
+        "abnormality": "area of decreased attenuation",
+        "finding": "None",
+        "presence": "present",
+        "location": ["liver"],
+        "degree": ["small", "focal"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "cyst",
+        "finding": "None",
+        "presence": "uncertain",
+        "location": ["liver"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "hemangioma",
+        "finding": "None",
+        "presence": "uncertain",
+        "location": ["liver"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "There is a 2.3 cm spiculated mass in the right upper lobe, highly suspicious for malignancy. No mediastinal lymphadenopathy.",
+    "output": [
+      {
+        "abnormality": "mass",
+        "finding": "None",
+        "presence": "present",
+        "location": ["right upper lobe"],
+        "degree": ["spiculated"],
+        "measurement": "2.3 cm",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "malignancy",
+        "finding": "None",
+        "presence": "uncertain",
+        "location": ["right upper lobe"],
+        "degree": ["highly suspicious"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "lymphadenopathy",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["mediastinal"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "MRI Brain: Moderate sized acute subdural hematoma along the left convexity measuring 12 mm in thickness. No midline shift.",
+    "output": [
+      {
+        "abnormality": "hematoma",
+        "finding": "subdural hematoma",
+        "presence": "present",
+        "location": ["left convexity"],
+        "degree": ["moderate sized", "acute"],
+        "measurement": "12 mm",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "shift",
+        "finding": "midline shift",
+        "presence": "absent",
+        "location": ["midline"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Nondisplaced fracture of the distal radius. No evidence of ulnar fracture.",
+    "output": [
+      {
+        "abnormality": "fracture",
+        "finding": "None",
+        "presence": "present",
+        "location": ["distal radius"],
+        "degree": ["nondisplaced"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "fracture",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["ulnar"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Multiple simple hepatic cysts, largest measuring 4.2 cm. Gallbladder contains multiple stones, largest 8 mm.",
+    "output": [
+      {
+        "abnormality": "cysts",
+        "finding": "hepatic cysts",
+        "presence": "present",
+        "location": ["hepatic"],
+        "degree": ["multiple", "simple"],
+        "measurement": "4.2 cm",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "stones",
+        "finding": "None",
+        "presence": "present",
+        "location": ["gallbladder"],
+        "degree": ["multiple"],
+        "measurement": "8 mm",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "CT Abdomen: Mild diffuse fatty infiltration of the liver. Pancreas is unremarkable.",
+    "output": [
+      {
+        "abnormality": "fatty infiltration",
+        "finding": "None",
+        "presence": "present",
+        "location": ["liver"],
+        "degree": ["mild", "diffuse"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "present",
+        "location": ["pancreas"],
+        "degree": ["unremarkable"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "MRI Knee: High grade tear of the anterior cruciate ligament. Moderate joint effusion.",
+    "output": [
+      {
+        "abnormality": "tear",
+        "finding": "None",
+        "presence": "present",
+        "location": ["anterior cruciate ligament"],
+        "degree": ["high grade"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "effusion",
+        "finding": "joint effusion",
+        "presence": "present",
+        "location": ["joint"],
+        "degree": ["moderate"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "CT Head: Old lacunar infarct in the left basal ganglia. Mild generalized cerebral atrophy.",
+    "output": [
+      {
+        "abnormality": "infarct",
+        "finding": "lacunar infarct",
+        "presence": "present",
+        "location": ["left basal ganglia"],
+        "degree": ["old"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "atrophy",
+        "finding": "cerebral atrophy",
+        "presence": "present",
+        "location": ["cerebral"],
+        "degree": ["mild", "generalized"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "No active infiltrates. Cardiomediastinal silhouette is normal.",
+    "output": [
+      {
+        "abnormality": "infiltrates",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["None"],
+        "degree": ["active"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "None",
+        "location": ["cardiomediastinal silhouette"],
+        "degree": ["normal"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Dilated common bile duct measuring 12 mm. No intrahepatic ductal dilatation.",
+    "output": [
+      {
+        "abnormality": "dilated",
+        "finding": "None",
+        "presence": "present",
+        "location": ["common bile duct"],
+        "degree": ["None"],
+        "measurement": "12 mm",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "ductal dilatation",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["intrahepatic"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "No evidence of pulmonary embolism. Bilateral small pleural effusions.",
+    "output": [
+      {
+        "abnormality": "pulmonary embolism",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["pulmonary"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "effusions",
+        "finding": "pleural effusions",
+        "presence": "present",
+        "location": ["bilateral pleural"],
+        "degree": ["small"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Large disc herniation at L4-L5 compressing the thecal sac. Facet arthropathy at L5-S1.",
+    "output": [
+      {
+        "abnormality": "herniation",
+        "finding": "disc herniation",
+        "presence": "present",
+        "location": ["L4-L5"],
+        "degree": ["large"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "compression",
+        "finding": "None",
+        "presence": "present",
+        "location": ["thecal sac"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "arthropathy",
+        "finding": "facet arthropathy",
+        "presence": "present",
+        "location": ["L5-S1"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "3.5 cm heterogeneous thyroid nodule with microcalcifications. No cervical lymphadenopathy.",
+    "output": [
+      {
+        "abnormality": "nodule",
+        "finding": "thyroid nodule",
+        "presence": "present",
+        "location": ["thyroid"],
+        "degree": ["heterogeneous"],
+        "measurement": "3.5 cm",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "microcalcifications",
+        "finding": "None",
+        "presence": "present",
+        "location": ["thyroid nodule"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "lymphadenopathy",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["cervical"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Displaced intertrochanteric fracture of the right femur. Osteoarthritic changes in both hips.",
+    "output": [
+      {
+        "abnormality": "fracture",
+        "finding": "intertrochanteric fracture",
+        "presence": "present",
+        "location": ["right femur"],
+        "degree": ["displaced"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "osteoarthritic changes",
+        "finding": "None",
+        "presence": "present",
+        "location": ["both hips"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Multiple bilateral thyroid nodules, largest 2.1 cm on right. No suspicious features.",
+    "output": [
+      {
+        "abnormality": "nodules",
+        "finding": "thyroid nodules",
+        "presence": "present",
+        "location": ["bilateral thyroid", "right"],
+        "degree": ["multiple"],
+        "measurement": "2.1 cm",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "MRI Shoulder: Full thickness tear of the supraspinatus tendon. Mild acromioclavicular joint arthritis.",
+    "output": [
+      {
+        "abnormality": "tear",
+        "finding": "full thickness tear",
+        "presence": "present",
+        "location": ["supraspinatus tendon"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "arthritis",
+        "finding": "acromioclavicular joint arthritis",
+        "presence": "present",
+        "location": ["acromioclavicular joint"],
+        "degree": ["mild"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": " Opacification of the left maxillary sinus. Nasal septum is deviated to the right.",
+    "output": [
+      {
+        "abnormality": "opacification",
+        "finding": "None",
+        "presence": "present",
+        "location": ["left maxillary sinus"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "deviated",
+        "finding": "None",
+        "presence": "present",
+        "location": ["nasal septum"],
+        "degree": ["right"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Comparison: Interval worsening of the right upper lobe mass, now measuring 3.5 cm (previously 2.8 cm).",
+    "output": [
+      {
+        "abnormality": "mass",
+        "finding": "None",
+        "presence": "present",
+        "location": ["right upper lobe"],
+        "degree": "None",
+        "measurement": "3.5 cm",
+        "comparison": "worsened"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Stable appearance of multiple sclerosis plaques compared to prior study.",
+    "output": [
+      {
+        "abnormality": "plaques",
+        "finding": "multiple sclerosis plaques",
+        "presence": "present",
+        "location": ["None"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "stable"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Significant interval improvement in the pancreatic necrosis, now with much less fluid collection.",
+    "output": [
+      {
+        "abnormality": "necrosis",
+        "finding": "pancreatic necrosis",
+        "presence": "present",
+        "location": ["pancreatic"],
+        "degree": ["much less"],
+        "measurement": "None",
+        "comparison": "improved"
+      },
+      {
+        "abnormality": "collection",
+        "finding": "fluid collection",
+        "presence": "present",
+        "location": ["pancreatic"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "much less"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "There is a 6mm solid pulmonary nodule in the right upper lobe, unchanged compared to the previous scan from 2023.",
+    "output": [
+      {
+        "abnormality": "nodule",
+        "finding": "pulmonary nodule",
+        "presence": "present",
+        "location": ["right upper lobe"],
+        "degree": ["solid"],
+        "measurement": "6mm",
+        "comparison": "stable"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "No evidence of hilar or mediastinal lymphadenopathy (LAP). Heart size is within normal limits.",
+    "output": [
+      {
+        "abnormality": "lymphadenopathy",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["hilar"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "lymphadenopathy",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["mediastinal"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "None",
+        "location": ["heart"],
+        "degree": ["normal size"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Multiple T2/FLAIR hyperintense patches are seen in the periventricular white matter, suggestive of demyelinating disease.",
+    "output": [
+      {
+        "abnormality": "patches",
+        "finding": "hyperintense patches",
+        "presence": "present",
+        "location": ["periventricular white matter"],
+        "degree": ["multiple"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "demyelinating disease",
+        "finding": "None",
+        "presence": "uncertain",
+        "location": ["periventricular white matter"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Acute comminuted fracture of the distal radius with dorsal displacement.",
+    "output": [
+      {
+        "abnormality": "fracture",
+        "finding": "comminuted fracture",
+        "presence": "present",
+        "location": ["distal radius"],
+        "degree": ["acute", "dorsal displacement"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "displacement",
+        "finding": "dorsal displacement",
+        "presence": "present",
+        "location": ["None"],
+        "degree": ["acute"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Trace left-sided pleural effusion has increased since the prior study.",
+    "output": [
+      {
+        "abnormality": "effusion",
+        "finding": "pleural effusion",
+        "presence": "present",
+        "location": ["left-sided"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "increased"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Common bile duct (CBD) is dilated, measuring approximately 12 mm. No choledocholithiasis is seen.",
+    "output": [
+      {
+        "abnormality": "dilated",
+        "finding": "None",
+        "presence": "present",
+        "location": ["common bile duct"],
+        "degree": "None",
+        "measurement": "12 mm",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "choledocholithiasis",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["common bile duct"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Mild cardiomegaly is noted with prominent pulmonary vasculature, possibly representing early CHF.",
+    "output": [
+      {
+        "abnormality": "cardiomegaly",
+        "finding": "None",
+        "presence": "present",
+        "location": ["heart"],
+        "degree": ["mild"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "vasculature",
+        "finding": "None",
+        "presence": "present",
+        "location": ["pulmonary"],
+        "degree": ["prominent"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "CHF",
+        "finding": "congestive heart failure",
+        "presence": "uncertain",
+        "location": "None",
+        "degree": ["early"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "The appendix is not clearly visualized; however, there is mild fat stranding in the right lower quadrant (RLQ).",
+    "output": [
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "uncertain",
+        "location": ["appendix"],
+        "degree": ["not clearly visualized"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "fat stranding",
+        "finding": "None",
+        "presence": "present",
+        "location": ["right lower quadrant", "RLQ"],
+        "degree": ["mild"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Old lacunar infarct in the right basal ganglia. No acute intracranial hemorrhage (ICH) detected.",
+    "output": [
+      {
+        "abnormality": "infarction",
+        "finding": "lacunar infarct",
+        "presence": "present",
+        "location": ["right basal ganglia"],
+        "degree": ["old"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "hemorrhage",
+        "finding": "intracranial hemorrhage",
+        "presence": "absent",
+        "location": ["intracranial"],
+        "degree": ["acute"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Degenerative changes with osteophyte formation at L4-L5 level.",
+    "output": [
+      {
+        "abnormality": "degenerative changes",
+        "finding": "None",
+        "presence": "present",
+        "location": ["L4-L5"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "osteophyte",
+        "finding": "None",
+        "presence": "present",
+        "location": ["L4-L5"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "The gallbladder contains multiple shadowing stones. The wall thickness is 3 mm.",
+    "output": [
+      {
+        "abnormality": "stones",
+        "finding": "None",
+        "presence": "present",
+        "location": ["gallbladder"],
+        "degree": ["shadowing", "multiple"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "present",
+        "location": ["gallbladder wall"],
+        "degree": "None",
+        "measurement": "3 mm",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Moderate atherosclerotic plaque at the origin of the left internal carotid artery (ICA).",
+    "output": [
+      {
+        "abnormality": "plaque",
+        "finding": "atherosclerotic plaque",
+        "presence": "present",
+        "location": ["origin of the left internal carotid artery", "ICA"],
+        "degree": ["moderate"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Minimal pneumothorax at the left apex, appears stable.",
+    "output": [
+      {
+        "abnormality": "pneumothorax",
+        "finding": "None",
+        "presence": "present",
+        "location": ["left apex"],
+        "degree": ["minimal"],
+        "measurement": "None",
+        "comparison": "stable"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Lungs are clear and well-expanded. No pleural effusion.",
+    "output": [
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "None",
+        "location": ["lungs"],
+        "degree": ["clear", "well-expanded"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "effusion",
+        "finding": "pleural effusion",
+        "presence": "absent",
+        "location": ["pleural"],
+        "degree": "None",
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Liver is slightly enlarged with homogeneous echogenicity, consistent with mild steatosis.",
+    "output": [
+      {
+        "abnormality": "enlarged",
+        "finding": "liver enlarged",
+        "presence": "present",
+        "location": ["liver"],
+        "degree": ["slightly"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "steatosis",
+        "finding": "None",
+        "presence": "uncertain",
+        "location": ["liver"],
+        "degree": ["mild"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "Small amount of free fluid in the pelvis. Ovaries are normal.",
+    "output": [
+      {
+        "abnormality": "free fluid",
+        "finding": "None",
+        "presence": "present",
+        "location": ["pelvis"],
+        "degree": ["small amount"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "None",
+        "location": ["ovaries"],
+        "degree": ["normal"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema.",
+    "input": "The 2 cm cyst in the lower pole of the left kidney has slightly increased in size.",
+    "output": [
+      {
+        "abnormality": "cyst",
+        "finding": "None",
+        "presence": "present",
+        "location": ["lower pole of the left kidney"],
+        "degree": "None",
+        "measurement": "2 cm",
+        "comparison": "worsened"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Findings: No significant fracture line was observed in the cranial bone structures. The IV ventricle is midline.",
+    "output": [
+      {
+        "abnormality": "fracture",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["cranial bone structures"],
+        "degree": ["significant"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "present",
+        "location": ["IV ventricle"],
+        "degree": ["midline"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Spleen size is enlarged and measured 134 mm. Spleen parenchymal echogenicity is homogeneous.",
+    "output": [
+      {
+        "abnormality": "enlarged",
+        "finding": "None",
+        "presence": "present",
+        "location": ["spleen"],
+        "degree": ["None"],
+        "measurement": "134 mm",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "present",
+        "location": ["spleen parenchyma"],
+        "degree": ["homogeneous"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "There is a small focal area of decreased attenuation in the liver, possibly representing a cyst. R/O hemangioma.",
+    "output": [
+      {
+        "abnormality": "area of decreased attenuation",
+        "finding": "None",
+        "presence": "present",
+        "location": ["liver"],
+        "degree": ["small", "focal"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "cyst",
+        "finding": "None",
+        "presence": "uncertain",
+        "location": ["liver"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "hemangioma",
+        "finding": "None",
+        "presence": "uncertain",
+        "location": ["liver"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Findings: No free intra-abdominal fluid was observed.",
+    "output": [
+      {
+        "abnormality": "free fluid",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["intra-abdominal"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "There is a 2.5 cm hypervascular hepatic lesion in segment IV, suspicious for hepatocellular carcinoma.",
+    "output": [
+      {
+        "abnormality": "mass",
+        "finding": "hepatic lesion",
+        "presence": "present",
+        "location": ["liver segment IV"],
+        "degree": ["hypervascular"],
+        "measurement": "2.5 cm",
+        "comparison": "uncertain"
+      },
+      {
+        "abnormality": "hepatocellular carcinoma",
+        "finding": "HCC",
+        "presence": "uncertain",
+        "location": ["liver segment IV"],
+        "degree": ["suspicious"],
+        "measurement": "2.5 cm",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Cardiothoracic ratio is within normal limits. No focal consolidation or pleural effusion identified.",
+    "output": [
+      {
+        "abnormality": "None",
+        "finding": "None",
+        "presence": "None",
+        "location": ["cardiothoracic ratio"],
+        "degree": ["within normal limits"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "consolidation",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["None"],
+        "degree": ["focal"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "pleural effusion",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["pleural spaces"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Left lower lobe airspace consolidation consistent with pneumonia.",
+    "output": [
+      {
+        "abnormality": "consolidation",
+        "finding": "airspace consolidation",
+        "presence": "present",
+        "location": ["left lower lobe"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "pneumonia",
+        "finding": "None",
+        "presence": "present",
+        "location": ["left lower lobe"],
+        "degree": ["consistent"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Acute displaced fracture of the distal radius with approximately 5 mm shortening.",
+    "output": [
+      {
+        "abnormality": "fracture",
+        "finding": "fracture shortening",
+        "presence": "present",
+        "location": ["distal radius"],
+        "degree": ["acute", "displaced", "shortening"],
+        "measurement": "5 mm",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Small bilateral pleural effusions seen: trace on the right, moderate on the left.",
+    "output": [
+      {
+        "abnormality": "pleural effusion",
+        "finding": "None",
+        "presence": "present",
+        "location": ["right pleural space"],
+        "degree": ["trace"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "pleural effusion",
+        "finding": "None",
+        "presence": "present",
+        "location": ["left pleural space"],
+        "degree": ["moderate"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "No acute intracranial hemorrhage identified. Chronic microvascular ischemic changes are present.",
+    "output": [
+      {
+        "abnormality": "hemorrhage",
+        "finding": "intracranial hemorrhage",
+        "presence": "absent",
+        "location": ["intracranial"],
+        "degree": ["acute"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "ischemic",
+        "finding": "microvascular ischemic",
+        "presence": "present",
+        "location": ["None"],
+        "degree": ["chronic"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Prostate volume estimated at 45 cc (enlarged).",
+    "output": [
+      {
+        "abnormality": "enlargement",
+        "finding": "prostate enlargement",
+        "presence": "present",
+        "location": ["prostate"],
+        "degree": ["None"],
+        "measurement": "45 cc",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "7 mm pulmonary nodule in the right upper lobe, new compared with prior exam.",
+    "output": [
+      {
+        "abnormality": "nodule",
+        "finding": "pulmonary nodule",
+        "presence": "present",
+        "location": ["right upper lobe"],
+        "degree": ["None"],
+        "measurement": "7 mm",
+        "comparison": "worsened"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "MRI brain demonstrates diffuse white matter hyperintensities greater than expected for age.",
+    "output": [
+      {
+        "abnormality": "hyperintensity",
+        "finding": "None",
+        "presence": "present",
+        "location": ["white matter"],
+        "degree": ["diffuse", "greater-than-expected-for-age"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "No lymphadenopathy in the mediastinum. Multiple enlarged abdominal lymph nodes are present.",
+    "output": [
+      {
+        "abnormality": "lymphadenopathy",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["mediastinum"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "lymphadenopathy",
+        "finding": "None",
+        "presence": "present",
+        "location": ["abdominal lymph nodes"],
+        "degree": ["enlarged", "multiple"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Interval decrease in size of hepatic metastases compared with prior study; overall improved.",
+    "output": [
+      {
+        "abnormality": "metastases",
+        "finding": "hepatic metastases",
+        "presence": "present",
+        "location": ["None"],
+        "degree": ["decreased size"],
+        "measurement": "None",
+        "comparison": "improved"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Gallstones are present. No biliary ductal dilatation is seen.",
+    "output": [
+      {
+        "abnormality": "gallstones",
+        "finding": "None",
+        "presence": "present",
+        "location": ["None"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "ductal dilatation",
+        "finding": "biliary ductal dilatation",
+        "presence": "absent",
+        "location": ["None"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Echocardiogram: Left ventricular ejection fraction approximately 35% (reduced).",
+    "output": [
+      {
+        "abnormality": "systolic dysfunction",
+        "finding": "reduced ejection fraction",
+        "presence": "present",
+        "location": ["left ventricular"],
+        "degree": ["reduced"],
+        "measurement": "35%",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "CT chest shows acute on chronic interstitial lung disease with honeycombing at the lung bases.",
+    "output": [
+      {
+        "abnormality": "interstitial lung disease",
+        "finding": "None",
+        "presence": "present",
+        "location": ["lung bases"],
+        "degree": ["acute", "chronic"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "honeycombing",
+        "finding": "None",
+        "presence": "present",
+        "location": ["lung bases"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "No renal calculi identified. A small cortical cyst in the left kidney measures 12 mm.",
+    "output": [
+      {
+        "abnormality": "renal calculi",
+        "finding": "None",
+        "presence": "absent",
+        "location": ["None"],
+        "degree": ["None"],
+        "measurement": "None",
+        "comparison": "None"
+      },
+      {
+        "abnormality": "cyst",
+        "finding": "cortical cyst",
+        "presence": "present",
+        "location": ["left kidney"],
+        "degree": ["small"],
+        "measurement": "12 mm",
+        "comparison": "None"
+      }
+    ]
+  },
+  {
+    "instruction": "Extract medical entities from the given radiology report snippet and format them into the specified JSON schema. Pay attention to negations and normal anatomy.",
+    "input": "Mild aortic atherosclerotic calcification is noted.",
+    "output": [
+      {
+        "abnormality": "calcification",
+        "finding": "atherosclerotic calcification",
+        "presence": "present",
+        "location": ["aorta"],
+        "degree": ["mild"],
+        "measurement": "None",
+        "comparison": "None"
+      }
+    ]
+  }
+]
