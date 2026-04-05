@@ -48,6 +48,7 @@ export WORLD_SIZE=$((NNODES * NPROC_PER_NODE))
 
 llm=microsoft/MediPhi-Instruct
 train_dir=./data/schema_train.json
+val_dir=./data/schema_val.json
 run_name="lgelcm_mediphi_it"
 output_dir=/kaggle/working/lgelcm/checkpoints/${run_name}
 
@@ -65,6 +66,7 @@ grad_accum_steps=4
 
 USE_DEEPSPEED=1
 DEEPSPEED_CONFIG=./scripts/zero2.json
+# DEEPSPEED_CONFIG=./scripts/zero3_offload.json
 
 DS_ARGS=""
 if [[ ${USE_DEEPSPEED} -eq 1 ]]; then
@@ -81,8 +83,9 @@ TRAIN_ARGS="
 ${DS_ARGS}
 --model_name_or_path ${llm}
 --train_file ${train_dir}
+--validation_file ${val_dir}
 --output_dir ${output_dir}
---num_train_epochs 2
+--num_train_epochs 5
 --fp16 True
 --per_device_train_batch_size ${batch_size}
 --gradient_accumulation_steps ${grad_accum_steps}
@@ -99,7 +102,7 @@ ${DS_ARGS}
 --max_grad_norm 1.0
 --lr_scheduler_type cosine
 --logging_steps 5
---model_max_length 2048
+--model_max_length 8192
 --gradient_checkpointing True
 --dataloader_num_workers 4
 --report_to none

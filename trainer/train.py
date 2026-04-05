@@ -113,9 +113,19 @@ def prepare_tokenizer_and_model(model_args: ModelArguments, training_args: Train
         for p in model.parameters():
             p.requires_grad = False
         
-        target_modules= [
-            'k_proj', 'q_proj', 'v_proj', 'o_proj', "gate_proj", "down_proj", "up_proj"
-        ]
+        exclude_keywords = {"lm_head", "embed", "output"}  
+
+        target_modules = list({
+            name.split('.')[-1]
+            for name, module in model.named_modules()
+            if isinstance(module, torch.nn.Linear)
+            and not any(k in name for k in exclude_keywords)
+        })
+
+        logger.info(
+            f"LoRA will be applied to {len(target_modules)} Linear layers: {', '.join(target_modules)}"
+        )
+        
         lora_cfg = LoraConfig(
             r=training_args.lora_r,
             lora_alpha=training_args.lora_alpha,

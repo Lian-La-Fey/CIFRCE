@@ -1,0 +1,113 @@
+Your task is extracting medical entities from a single radiology report and returning them as a strictly defined relation graph in JSON format.
+
+The output must be a SINGLE JSON ARRAY of relation objects following this structure:
+
+```json
+[
+  {
+    "anchor": "str (field:status)",
+    "related": ["str (field:status)"]
+  }
+]
+```
+
+Where:
+
+- "field" is one of: "observation", "location", "degree", "trend", "measurement"
+- "status" is: 
+  - "present", "absent", or "uncertain" for "observation", "location", "degree", "trend" fields.
+  - "current" or "old" for "measurement" field.
+
+Do NOT output anything other than JSON array.
+
+GENERAL RULES
+
+Output must be a valid SINGLE JSON array.
+Use only the report text provided.
+If the report has Findings and Impression (or Summary, Conclusion) sections, use ONLY FINDINGS section.
+If the report lacks Findings, use the given text.
+Ignore History, Technique, Dose, Imaging Devices, Administrative Text, and Boilerplate Parts of the report.
+Do NOT infer unstated observations, locations, degrees, trends, or measurements; extract only clinical entities explicitly mentioned in the text.
+No grammatical, lexical transformation is permitted. DO NOT ALTER WORD FORMS in any way.
+
+ENTITY FIELDS
+
+OBSERVATION
+
+An observation is any clinically relevant Finding, Radiological Signs & Signal Alterations, Pathological Conditions & Diseases, Morphological & Structural Abnormalities, Anatomical Status, or Surgical Hardware/Procedure documented by a radiologist.
+
+Format in graph: "value (observation:status)" where status is "present", "absent", or "uncertain".
+
+COMPOUND OBSERVATIONS
+Fixed clinical phrases must be extracted as a single observation entity. Do NOT split them into separate components.
+
+OBSERVATION STATUS
+
+- present: Use when the report clearly confirms the existence of an observation.
+- absent: Use when a specific observation is explicitly ruled out or negated.
+- uncertain: Use when the report contains equivocal, suggestive, or non-definitive language regarding the observation
+
+LOCATION
+
+A "location" represents the explicit Anatomical Site, Organs and Solid Structures, Hollow Organs / Luminal Structures, Anatomical Regions, Subregions / Segments / Lobes, Vascular Structures/ Lymphatic System, Anatomical Structure, Anatomical Level, or Spatial / Directional descriptor.
+
+Format in graph: "value (location:status)" where status is "present", "absent", or "uncertain"
+
+LOCATION STATUS
+
+present: Use when an anatomical site is explicitly described as involved or associated with an entity.
+
+absent: Use when a specific anatomical structure is explicitly stated to be surgically removed, not visualized, not identified, not seen etc. Do NOT extract surgically removed, not visualized, not identified, not seen phrases as observations. 
+
+uncertain: Use when an anatomical site is not clearly visualized, not well delineated, poorly seen, obscured, partially visualized, indeterminate on imaging etc.
+
+DEGREES
+
+Degree stores qualifiers that characterize the Severity, Extent, Quantity, Distribution, Pattern, Appearance, Morphologic Character, Grade, Relative Laterality Comparison of an observation.
+
+Format in graph: "value (degree:status)" where status is "present", "absent", or "uncertain`.
+
+DEGREE STATUS
+
+present: When the degree term is explicitly and affirmatively stated, and is NOT inside negation or uncertainty scope.
+
+absent: When the degree qualifier itself is explicitly negated.
+
+uncertain: When the degree qualifier is explicitly within the scope of equivocal or hedging language.
+
+TRENDS
+
+Trend stores Stability, Progression, Temporal Status, Temporal Context, Clinical Course / Duration, Recurrent / Re-demonstration descriptors that characterize how an observation or location entity has changed over time.
+
+TREND STATUS
+
+present: Use when a trend descriptor is explicitly stated as present.
+absent: Use when a trend descriptor is explicitly negated.
+uncertain: Use when a trend descriptor is equivocal or uncertain.
+
+MEASUREMENTS
+
+Measurement stores numeric values like Size, Volume, Velocity, Multi-Dimensional Size, Percentages with units that quantify an observation, location.
+
+Format in graph: "value (measurement:status)" where status is "current" or "old`.
+
+MEASUREMENT STATUS
+
+current: Use when the measurement refers to the present study.
+old: Use when the measurement refers to a prior study or baseline value.
+
+ABBREVIATIONS
+
+Abbreviations (e.g., sbo, cad, mac, ivh, sdh, edh, sah, cac, ivc) MUST be extracted exactly as written. If an abbreviation represents a pathological finding, clinical sign, or condition, extract it as an Observation. If an abbreviation represents an anatomical structure or region, extract it as a Location. Apply the standard presence/absence/uncertainty logic to the entity type.
+
+NEGATED DESCRIPTORS
+
+Phrases like "not enlarged", "non-calcified" must be extracted without the negation prefix, assigned status = "absent" under the appropriate field.
+
+ANCHOR TYPE RESTRICTION RULE
+
+An anchor node MUST be either: an observation OR a location (only when no observation exists in that sentence context). A trend, degree, or measurement can NEVER be used as an anchor under any circumstance. Trend, degree, or measurement values MUST NEVER be converted into observations.
+
+FINAL INSTRUCTION
+
+Extract medical entities from the given report and return ONLY the relation graph as a JSON array.
