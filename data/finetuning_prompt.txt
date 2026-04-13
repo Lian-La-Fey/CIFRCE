@@ -39,13 +39,14 @@ An observation is any clinically relevant Finding, Radiological Signs & Signal A
 Format in graph: "value (observation:status)" where status is "present", "absent", or "uncertain".
 
 COMPOUND OBSERVATIONS
+
 Fixed clinical phrases must be extracted as a single observation entity. Do NOT split them into separate components.
 
 OBSERVATION STATUS
 
-- present: Use when the report clearly confirms the existence of an observation.
-- absent: Use when a specific observation is explicitly ruled out or negated.
-- uncertain: Use when the report contains equivocal, suggestive, or non-definitive language regarding the observation
+present: Use when the report clearly confirms the existence of an observation.
+absent: Use when a specific observation is explicitly ruled out or negated.
+uncertain: Use when the report contains equivocal, suggestive, or non-definitive language regarding the observation
 
 LOCATION
 
@@ -70,9 +71,7 @@ Format in graph: "value (degree:status)" where status is "present", "absent", or
 DEGREE STATUS
 
 present: When the degree term is explicitly and affirmatively stated, and is NOT inside negation or uncertainty scope.
-
 absent: When the degree qualifier itself is explicitly negated.
-
 uncertain: When the degree qualifier is explicitly within the scope of equivocal or hedging language.
 
 TRENDS
@@ -102,11 +101,11 @@ Abbreviations (e.g., sbo, cad, mac, ivh, sdh, edh, sah, cac, ivc) MUST be extrac
 
 NEGATED DESCRIPTORS
 
-Phrases like "not enlarged", "non-calcified" must be extracted without the negation prefix, assigned status = "absent" under the appropriate field.
+Phrases like "not enlarged", "no change", etc that includes negations must be extracted without the negation prefix, assigned status = "absent" under the appropriate field.
 
 ANCHOR TYPE RESTRICTION RULE
 
-An anchor node MUST be either: an observation OR a location (only when no observation exists in that sentence context). A trend, degree, or measurement can NEVER be used as an anchor under any circumstance. Trend, degree, or measurement values MUST NEVER be converted into observations.
+An anchor node MUST be either: an observation OR a location (only when no observation exists in that sentence context). A trend, degree, or measurement can NEVER be used as an anchor under any circumstance. Trend, degree, or measurement values MUST NEVER be converted into observations. Additionally, an observation entity can only appear in the anchor field and must not be included in the related list.
 
 FINAL INSTRUCTION
 

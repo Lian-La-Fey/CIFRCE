@@ -84,8 +84,8 @@ srun apptainer exec \
     
     # Model & Dataset
     llm=\"/scratch/LGELCM_MODELS/MediPhi-Instruct\"
-    train_dir=\"./data/schema_train.json\"
-    val_dir=\"./data/schema_val.json\"
+    train_dataset_use=\"ct_rate_train,mimic_iv_train,radgraphXL_mimic_train,radgraphXL_stanford_train,radiopedia_train,rexgradient_train\"
+    val_dataset_use=\"ct_rate_val,mimic_iv_val,radgraphXL_mimic_val,radgraphXL_stanford_val,radiopedia_val,rexgradient_val\"
     
     # Hyperparameters
     lr=2e-4
@@ -102,8 +102,8 @@ srun apptainer exec \
     python -u -m trainer.train \
         --deepspeed \$DEEPSPEED_CONFIG \
         --model_name_or_path \${llm} \
-        --train_file \${train_dir} \
-        --validation_file \${val_dir} \
+        --train_dataset_use \${train_dataset_use} \
+        --val_dataset_use \${val_dataset_use} \
         \
         --output_dir \${output_dir} \
         --fp16 True \
@@ -119,10 +119,10 @@ srun apptainer exec \
         --lr_scheduler_type cosine \
         --max_grad_norm 1.0 \
         \
-        --num_train_epochs 15 \
+        --num_train_epochs 10 \
         --save_strategy epoch \
         --eval_strategy epoch \
-        --save_total_limit 15 \
+        --save_total_limit 10 \
         --logging_steps 10  \
         \
         \

@@ -169,11 +169,11 @@ def train():
 
             model.get_input_embeddings().register_forward_hook(make_inputs_require_grad)
             
-    train_dataset = LGELCMTextDataset(data_args.train_file, tokenizer)
+    train_dataset = LGELCMTextDataset(data_args.train_dataset_use, tokenizer)
     eval_dataset = None
     
-    if data_args.validation_file and Path(data_args.validation_file).exists():
-        eval_dataset = LGELCMTextDataset(data_args.validation_file, tokenizer)
+    if data_args.val_dataset_use:
+        eval_dataset = LGELCMTextDataset(data_args.val_dataset_use, tokenizer)
     
     data_collator = DataCollatorForSFT(tokenizer, max_length=training_args.model_max_length)
     

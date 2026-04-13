@@ -47,8 +47,8 @@ export WORLD_SIZE=$((NNODES * NPROC_PER_NODE))
 # ==================================================
 
 llm=microsoft/MediPhi-Instruct
-train_dir=./data/schema_train.json
-val_dir=./data/schema_val.json
+train_dataset_use=ct_rate_train,mimic_iv_train,radgraphXL_mimic_train,radgraphXL_stanford_train,radiopedia_train,rexgradient_train
+val_dataset_use=ct_rate_val,mimic_iv_val,radgraphXL_mimic_val,radgraphXL_stanford_val,radiopedia_val,rexgradient_val
 run_name="lgelcm_mediphi_it"
 output_dir=/kaggle/working/lgelcm/checkpoints/${run_name}
 
@@ -56,7 +56,7 @@ output_dir=/kaggle/working/lgelcm/checkpoints/${run_name}
 # Training Hyperparameters
 # ==================================================
 
-lr=2e-5
+lr=2e-4
 batch_size=1
 grad_accum_steps=4
 
@@ -82,8 +82,8 @@ ENTRY_FILE=trainer.train
 TRAIN_ARGS="
 ${DS_ARGS}
 --model_name_or_path ${llm}
---train_file ${train_dir}
---validation_file ${val_dir}
+--train_dataset_use ${train_dataset_use}
+--val_dataset_use ${val_dataset_use}
 --output_dir ${output_dir}
 --num_train_epochs 5
 --fp16 True

@@ -14,8 +14,8 @@ class ModelArguments:
     
 @dataclass
 class DataArguments:
-    train_file: Optional[str] = field(default="./data/schema_train.json")
-    validation_file: Optional[str] = field(default="./data/schema_val.json")
+    train_dataset_use: Optional[str] = field(default="")
+    val_dataset_use: Optional[str] = field(default="")
 
 @dataclass
 class TrainingArguments(transformers.TrainingArguments):

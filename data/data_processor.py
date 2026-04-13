@@ -18,11 +18,13 @@ def read_json(path: str):
     return []
 
 class LGELCMTextDataset(Dataset):
-    def __init__(self, annotation_path: str, tokenizer: PreTrainedTokenizerBase):
+    def __init__(self, dataset_use: str, tokenizer: PreTrainedTokenizerBase):
         super().__init__()
-        self.samples = read_json(annotation_path)
+        self.samples = []
+        for dataset_path in dataset_use.split(","):
+            self.samples.extend(read_json(f"./data/finetune_data/{dataset_path}.json"))
         self.tokenizer = tokenizer
-        logger.info(f"Loaded {len(self.samples)} samples from {annotation_path}")
+        logger.info(f"Loaded {len(self.samples)} samples from {dataset_use}")
         
     def __len__(self):
         return len(self.samples)
