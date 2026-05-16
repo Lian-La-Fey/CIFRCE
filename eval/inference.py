@@ -10,7 +10,6 @@ from __future__ import annotations
 import argparse
 import json
 import re
-from dataclasses import dataclass
 from glob import glob
 from pathlib import Path
 from typing import Any, Iterable
@@ -23,18 +22,7 @@ from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
-@dataclass(frozen=True)
-class InferenceConfig:
-    model_path: str
-    adapter_path: str
-    prompt_file: str
-    output_file: str
-    test_input_glob: str
-    max_input_length: int
-    max_new_tokens: int
-
-
-def parse_args() -> InferenceConfig:
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser("LoRA Finetuned LLM - Inference")
     parser.add_argument(
         "--model_path",
@@ -67,11 +55,22 @@ def parse_args() -> InferenceConfig:
             "output_validation_llava_llama_3.1_8b.json"
         ),
     )
+    parser.add_argument(
+        "--ground_truth_key",
+        type=str,
+        default="ground_truth",
+        help="Field name for ground truth text in the input JSON.",
+    )
+    parser.add_argument(
+        "--prediction_key",
+        type=str,
+        default="prediction",
+        help="Field name for prediction text in the input JSON.",
+    )
     parser.add_argument("--max_input_length", type=int, default=8192)
     parser.add_argument("--max_new_tokens", type=int, default=4096)
 
-    args = parser.parse_args()
-    return InferenceConfig(**vars(args))
+    return parser.parse_args()
 
 
 def load_tokenizer(adapter_path: str) -> AutoTokenizer:
@@ -93,7 +92,7 @@ def load_model(
 ) -> PeftModel:
     base_model = AutoModelForCausalLM.from_pretrained(
         model_path,
-        dtype=torch.float16,
+        torch_dtype=torch.float16,
         device_map={"": accelerator.local_process_index},
         trust_remote_code=True,
     )
@@ -108,19 +107,14 @@ def load_system_prompt(prompt_file: str) -> str:
 
 
 def load_test_samples(test_input_glob: str) -> list[dict[str, Any]]:
-    """Load samples in the format: {id, image, ground_truth, prediction}."""
+    """Load samples from JSON files without changing their structure."""
     samples: list[dict[str, Any]] = []
     for file_path in glob(test_input_glob):
         data = json.loads(Path(file_path).read_text(encoding="utf-8"))
         for item in data:
-            sample = {
-                "source_file": Path(file_path).name,
-                "id": item.get("id", ""),
-                "image": item.get("image", ""),
-                "ground_truth": item["ground_truth"],
-                "prediction": item["prediction"],
-            }
-            samples.append(sample)
+            if "source_file" not in item:
+                item["source_file"] = Path(file_path).name
+            samples.append(item)
     return samples
 
 
@@ -171,7 +165,7 @@ def parse_entities(raw_text: str) -> list[Any]:
         parsed = json.loads(raw_text)
         return parsed if isinstance(parsed, list) else []
     except (json.JSONDecodeError, ValueError):
-        match = re.search(r"```(?:json)?\s*(\[.*?\])\s*```", raw_text, re.DOTALL)
+        match = re.search(r"```(?:json)?\s*(\[.*\])\s*```", raw_text, re.DOTALL)
         if match:
             try:
                 return json.loads(match.group(1))
@@ -212,6 +206,8 @@ def run_inference_on_local_samples(
     max_input_length: int,
     max_new_tokens: int,
     output_file: str,
+    ground_truth_key: str,
+    prediction_key: str,
 ) -> list[dict[str, Any]]:
     local_results: list[dict[str, Any]] = []
     rank = accelerator.process_index
@@ -227,8 +223,13 @@ def run_inference_on_local_samples(
     )
 
     for idx, sample in enumerate(iterator, 1):
+        gt_text = sample.get(ground_truth_key)
+        pred_text = sample.get(prediction_key)
+        if not gt_text or not pred_text:
+            continue
+
         gt_raw, gt_entities = extract_entities_for_text(
-            text=sample["ground_truth"],
+            text=gt_text,
             system_prompt=system_prompt,
             model=model,
             tokenizer=tokenizer,
@@ -238,7 +239,7 @@ def run_inference_on_local_samples(
         )
 
         pred_raw, pred_entities = extract_entities_for_text(
-            text=sample["prediction"],
+            text=pred_text,
             system_prompt=system_prompt,
             model=model,
             tokenizer=tokenizer,
@@ -247,19 +248,15 @@ def run_inference_on_local_samples(
             max_new_tokens=max_new_tokens,
         )
 
-        local_results.append(
+        sample.update(
             {
-                "source_file": sample["source_file"],
-                "id": sample["id"],
-                "image": sample["image"],
-                "ground_truth": sample["ground_truth"],
-                "prediction": sample["prediction"],
                 "gt_raw_output": gt_raw,
                 "gt_entities": gt_entities,
                 "pred_raw_output": pred_raw,
                 "pred_entities": pred_entities,
             }
         )
+        local_results.append(sample)
 
         if idx % 5 == 0:
             save_partial_results(partial_path, local_results)
@@ -277,13 +274,13 @@ def save_results(results: list[dict[str, Any]], output_file: str) -> None:
 
 
 def main() -> None:
-    config = parse_args()
+    args = parse_args()
     accelerator = Accelerator()
 
-    tokenizer = load_tokenizer(config.adapter_path)
-    model = load_model(config.model_path, config.adapter_path, tokenizer, accelerator)
-    system_prompt = load_system_prompt(config.prompt_file)
-    all_samples = load_test_samples(config.test_input_glob)
+    tokenizer = load_tokenizer(args.adapter_path)
+    model = load_model(args.model_path, args.adapter_path, tokenizer, accelerator)
+    system_prompt = load_system_prompt(args.prompt_file)
+    all_samples = load_test_samples(args.test_input_glob)
 
     if accelerator.is_main_process:
         print(f"Total samples  : {len(all_samples)}")
@@ -296,15 +293,17 @@ def main() -> None:
             model=model,
             tokenizer=tokenizer,
             accelerator=accelerator,
-            max_input_length=config.max_input_length,
-            max_new_tokens=config.max_new_tokens,
-            output_file=config.output_file,
+            max_input_length=args.max_input_length,
+            max_new_tokens=args.max_new_tokens,
+            output_file=args.output_file,
+            ground_truth_key=args.ground_truth_key,
+            prediction_key=args.prediction_key,
         )
 
     all_results = gather_object(local_results)
 
     if accelerator.is_main_process:
-        save_results(all_results, config.output_file)
+        save_results(all_results, args.output_file)
 
 
 if __name__ == "__main__":
