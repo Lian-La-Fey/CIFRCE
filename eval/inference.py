@@ -1,20 +1,12 @@
-"""Inference script for LoRA finetuned LLMs.
-
-This module loads a base model and LoRA adapter, builds chat prompts for
-both ground-truth and prediction texts, and extracts structured entities
-from the model outputs.
-"""
-
-from __future__ import annotations
-
 import argparse
 import json
 import re
+
 from glob import glob
 from pathlib import Path
-from typing import Any, Iterable
 
 import torch
+
 from accelerate import Accelerator
 from accelerate.utils import gather_object
 from peft import PeftModel
@@ -22,56 +14,21 @@ from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args():
     parser = argparse.ArgumentParser("LoRA Finetuned LLM - Inference")
-    parser.add_argument(
-        "--model_path",
-        type=str,
-        default="/kaggle/input/datasets/iriscaius/mediphi-instrcut/MediPhi-Instruct",
-    )
-    parser.add_argument(
-        "--adapter_path",
-        type=str,
-        default=(
-            "/kaggle/input/datasets/iriscaius/"
-            "lgelcm-lr2e-4-bs1-ga4-2026-04-24-08-04/checkpoint-1142"
-        ),
-    )
-    parser.add_argument(
-        "--prompt_file",
-        type=str,
-        default="/kaggle/working/lgelcm/data/finetuning_prompt.txt",
-    )
-    parser.add_argument(
-        "--output_file",
-        type=str,
-        default="/kaggle/working/lgelcm/results/test_results.json",
-    )
-    parser.add_argument(
-        "--test_input_glob",
-        type=str,
-        default=(
-            "/kaggle/input/datasets/iriscaius/ct-chat-results/"
-            "output_validation_llava_llama_3.1_8b.json"
-        ),
-    )
-    parser.add_argument(
-        "--ground_truth_key",
-        type=str,
-        default="ground_truth",
-        help="Field name for ground truth text in the input JSON.",
-    )
-    parser.add_argument(
-        "--prediction_key",
-        type=str,
-        default="prediction",
-        help="Field name for prediction text in the input JSON.",
-    )
+    parser.add_argument("--model_path", type=str, default="microsoft/MediPhi-Instruct")
+    parser.add_argument("--adapter_path", type=str, default="./checkpoints/checkpoint-1142")
+    
+    parser.add_argument("--prompt_file", type=str, default="./data/finetuning_prompt.txt")
+    parser.add_argument("--output_file", type=str, default="./results/test_results.json")
+    parser.add_argument("--test_input_glob", type=str, default="./data/**/*test.json")
+    parser.add_argument("--ground_truth_key", type=str, default="ground_truth")
+    parser.add_argument("--prediction_key", type=str, default="prediction")
+    
     parser.add_argument("--max_input_length", type=int, default=8192)
     parser.add_argument("--max_new_tokens", type=int, default=4096)
 
     return parser.parse_args()
-
 
 def load_tokenizer(adapter_path: str) -> AutoTokenizer:
     tokenizer = AutoTokenizer.from_pretrained(
@@ -105,10 +62,8 @@ def load_model(
 def load_system_prompt(prompt_file: str) -> str:
     return Path(prompt_file).read_text(encoding="utf-8").strip()
 
-
-def load_test_samples(test_input_glob: str) -> list[dict[str, Any]]:
-    """Load samples from JSON files without changing their structure."""
-    samples: list[dict[str, Any]] = []
+def load_test_samples(test_input_glob: str):
+    samples = []
     for file_path in glob(test_input_glob):
         data = json.loads(Path(file_path).read_text(encoding="utf-8"))
         for item in data:
@@ -119,7 +74,6 @@ def load_test_samples(test_input_glob: str) -> list[dict[str, Any]]:
 
 
 def build_prompt(text: str, system_prompt: str, tokenizer: AutoTokenizer) -> str:
-    """Build a chat prompt for the given text (ground truth or prediction)."""
     messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": text},
@@ -160,7 +114,7 @@ def generate_raw_text(
     return tokenizer.decode(gen_ids, skip_special_tokens=True).strip()
 
 
-def parse_entities(raw_text: str) -> list[Any]:
+def parse_entities(raw_text: str):
     try:
         parsed = json.loads(raw_text)
         return parsed if isinstance(parsed, list) else []
@@ -182,8 +136,7 @@ def extract_entities_for_text(
     accelerator: Accelerator,
     max_input_length: int,
     max_new_tokens: int,
-) -> tuple[str, list[Any]]:
-    """Build prompt, generate output, and parse entities for one text."""
+):
     prompt = build_prompt(text, system_prompt, tokenizer)
     raw_text = generate_raw_text(
         prompt, model, tokenizer, accelerator, max_input_length, max_new_tokens
@@ -192,13 +145,13 @@ def extract_entities_for_text(
     return raw_text, entities
 
 
-def save_partial_results(path: Path, results: list[dict[str, Any]]) -> None:
+def save_partial_results(path, results):
     with path.open("w", encoding="utf-8") as file:
         json.dump(results, file, ensure_ascii=False, indent=2)
 
 
 def run_inference_on_local_samples(
-    local_samples: Iterable[dict[str, Any]],
+    local_samples,
     system_prompt: str,
     model: PeftModel,
     tokenizer: AutoTokenizer,
@@ -208,8 +161,8 @@ def run_inference_on_local_samples(
     output_file: str,
     ground_truth_key: str,
     prediction_key: str,
-) -> list[dict[str, Any]]:
-    local_results: list[dict[str, Any]] = []
+):
+    local_results = []
     rank = accelerator.process_index
 
     output_dir = Path(output_file).parent
@@ -225,28 +178,36 @@ def run_inference_on_local_samples(
     for idx, sample in enumerate(iterator, 1):
         gt_text = sample.get(ground_truth_key)
         pred_text = sample.get(prediction_key)
-        if not gt_text or not pred_text:
+
+        gt_raw = None
+        gt_entities = None
+        pred_raw = None
+        pred_entities = None
+
+        if gt_text:
+            gt_raw, gt_entities = extract_entities_for_text(
+                text=gt_text,
+                system_prompt=system_prompt,
+                model=model,
+                tokenizer=tokenizer,
+                accelerator=accelerator,
+                max_input_length=max_input_length,
+                max_new_tokens=max_new_tokens,
+            )
+
+        if pred_text:
+            pred_raw, pred_entities = extract_entities_for_text(
+                text=pred_text,
+                system_prompt=system_prompt,
+                model=model,
+                tokenizer=tokenizer,
+                accelerator=accelerator,
+                max_input_length=max_input_length,
+                max_new_tokens=max_new_tokens,
+            )
+        
+        if gt_raw is None and pred_raw is None:
             continue
-
-        gt_raw, gt_entities = extract_entities_for_text(
-            text=gt_text,
-            system_prompt=system_prompt,
-            model=model,
-            tokenizer=tokenizer,
-            accelerator=accelerator,
-            max_input_length=max_input_length,
-            max_new_tokens=max_new_tokens,
-        )
-
-        pred_raw, pred_entities = extract_entities_for_text(
-            text=pred_text,
-            system_prompt=system_prompt,
-            model=model,
-            tokenizer=tokenizer,
-            accelerator=accelerator,
-            max_input_length=max_input_length,
-            max_new_tokens=max_new_tokens,
-        )
 
         sample.update(
             {
@@ -265,7 +226,7 @@ def run_inference_on_local_samples(
     return local_results
 
 
-def save_results(results: list[dict[str, Any]], output_file: str) -> None:
+def save_results(results, output_file: str):
     output_path = Path(output_file)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as file:

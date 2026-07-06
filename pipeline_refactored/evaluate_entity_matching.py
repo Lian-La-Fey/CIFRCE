@@ -1,26 +1,6 @@
-"""
-Step 11 — Flexible Entity-Match Evaluation (Fast, Multi-Process)
-=================================================================
-For every report in *test_results_rate_eval_task2.json* this script
-bi-directionally matches ground-truth (GT) vs. predicted (PRED) entity
-relation groups across four semantic fields:
-
-    observation · location · degree · trend
-
-Matching is *flexible*: it expands each entity via abbreviation dictionaries,
-UMLS CUI synonyms, and BioLORD embedding synonyms before scoring.  A
-two-pass approach (soft anchor check → hard status check) avoids
-over-penalising partial matches.
-
-Outputs:
-    detailed_evaluation_results.json  —  per-report entity-level match details
-
-Usage:
-    python 11_entity_match_evaluation_flexible_score_fast.py
-"""
-
 import json
 import re
+
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from dataclasses import dataclass, field as dc_field
 from functools import lru_cache
@@ -32,17 +12,17 @@ from tqdm import tqdm
 # CONFIGURATION
 # ================================
 
-INPUT_JSON            = "test_results_rate_eval_task2.json"
-ENTITY_JSON           = "entity.json"
-ENTITY_RULE_JSON      = "entity_rule.json"
+INPUT_JSON = "test_results_rate_eval_task2.json"
+ENTITY_JSON = "entity.json"
+ENTITY_RULE_JSON = "entity_rule.json"
 UMLS_CUI_SYNONYMS_JSON = "umls_cui_synonyms.json"
-EMBED_SYNONYMS_JSON   = "embedding_synonyms.json"
-ABBREV_JSON           = "medical_abbreviations_dictionary_normalized.json"
+EMBED_SYNONYMS_JSON = "embedding_synonyms.json"
+ABBREV_JSON = "medical_abbreviations_dictionary_normalized.json"
 
-OUTPUT_JSON           = "detailed_evaluation_results.json"
-NUM_WORKERS           = 2
+OUTPUT_JSON = "detailed_evaluation_results.json"
+NUM_WORKERS = 2
 
-SEMANTIC_FIELDS       = ["observation", "location", "degree", "trend"]
+SEMANTIC_FIELDS = ["observation", "location", "degree", "trend"]
 
 STOP_WORDS = {
     "of", "the", "a", "an", "in", "on", "at", "to", "for",
@@ -55,12 +35,12 @@ STOP_WORDS = {
 # GLOBAL CACHES  (populated by load_all)
 # ================================
 
-INPUT_DATA: list       = []
-ENTITY_CACHE: dict     = {}
-ENTITY_RULE: dict      = {}
+INPUT_DATA: list = []
+ENTITY_CACHE: dict = {}
+ENTITY_RULE: dict = {}
 UMLS_CUI_SYNONYMS: dict = {}
-EMBED_SYNONYMS: dict   = {}
-ABBREV: dict           = {}
+EMBED_SYNONYMS: dict = {}
+ABBREV: dict = {}
 
 
 # ================================
@@ -69,7 +49,6 @@ ABBREV: dict           = {}
 
 @dataclass
 class Entity:
-    """A single medical entity with its semantic field and presence status."""
     eid:        str
     value:      str
     field:      str
@@ -81,7 +60,6 @@ class Entity:
 
 @dataclass
 class RelationGroup:
-    """An anchor entity plus its semantically related entities."""
     rid:     str
     anchor:  Entity
     related: List[Entity]

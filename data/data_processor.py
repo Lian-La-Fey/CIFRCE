@@ -17,7 +17,7 @@ def read_json(path: str):
     logger.warning(f"Unsupported file format: {path}")
     return []
 
-class LGELCMTextDataset(Dataset):
+class TextDataset(Dataset):
     def __init__(self, dataset_use: str, tokenizer: PreTrainedTokenizerBase):
         super().__init__()
         self.samples = []

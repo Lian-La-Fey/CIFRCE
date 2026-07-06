@@ -1,26 +1,12 @@
-"""
-Step 9 — Parallel Entity Tokenizer (SciSpacy + BioLORD)
-=========================================================
-For every unique entity in *unique_entity_counts_test.json* this script:
-  1. Strips stop-words from the entity name.
-  2. Generates all phrase partitions (sub-token splits).
-  3. Resolves each token against UMLS via SciSpacy (with an embedding
-     similarity gate to reject spurious matches).
-  4. Persists both the entity cache (entity.json) and the rule cache
-     (entity_rule.json) to disk — incrementally every SAVE_INTERVAL
-     processed items, and once more when all work is done.
-
-Usage:
-    python 9_entity_tokenizer_parallel_spacy_production.py
-"""
-
 import json
 import threading
+
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import spacy
 import torch
+
 from scispacy.linking import EntityLinker
 from sentence_transformers import SentenceTransformer, util
 from tqdm import tqdm
@@ -40,7 +26,7 @@ UMLS_TOP_K          = 20     # SciSpacy linker top-k candidates
 MATCH_THRESHOLD     = 0.9125 # Minimum cosine similarity to accept a UMLS match
 
 MAX_WORKERS   = 8
-SAVE_INTERVAL = 1000         # Save caches every N processed entities
+SAVE_INTERVAL = 1000
 
 STOP_WORDS = {
     "of", "the", "a", "an", "in", "on", "at", "to", "for",
@@ -52,8 +38,6 @@ STOP_WORDS = {
 # ================================
 # GLOBAL STATE  (models + caches)
 # ================================
-# Models are loaded once at module level so that worker threads can share them
-# without repeated initialisation overhead.
 
 print("Loading the SciSpacy model. This may take a moment...")
 nlp = spacy.load(SPACY_MODEL_NAME)
@@ -88,7 +72,6 @@ SAVE_LOCK              = threading.Lock()
 # ================================
 
 def load_caches() -> None:
-    """Load entity and entity-rule caches from disk into global dicts."""
     global ENTITY_CACHE, ENTITY_RULE_CACHE
 
     if Path(ENTITY_JSON).exists():
@@ -103,7 +86,6 @@ def load_caches() -> None:
 
 
 def save_caches() -> None:
-    """Thread-safe snapshot-and-write of both caches to disk."""
     with SAVE_LOCK:
         with ENTITY_CACHE_LOCK:
             snapshot_entity = dict(ENTITY_CACHE)
@@ -121,25 +103,11 @@ def save_caches() -> None:
 # ================================
 
 def remove_stopwords(text: str) -> str:
-    """Return *text* with stop-words removed (case-insensitive)."""
     tokens = text.lower().split()
     return " ".join(t for t in tokens if t not in STOP_WORDS)
 
 
 def make_result_dict(term: str, res: dict | None, split_type: str) -> dict:
-    """
-    Build a standardised result dict for a resolved (or unresolved) term.
-
-    Args:
-        term:       The original query term.
-        res:        Resolution result from :func:`resolve_scispacy`, or None.
-        split_type: Dataset split label (e.g. ``"test"``).
-
-    Returns:
-        A dict with ``term``, ``found``, ``source``, ``id``,
-        ``preferred_name``, ``vocabulary``, ``semantic_types``,
-        and ``split_type`` keys.
-    """
     if res:
         return {
             "term":           term,
@@ -168,12 +136,6 @@ def make_result_dict(term: str, res: dict | None, split_type: str) -> dict:
 # ================================
 
 def resolve_scispacy(term: str) -> dict | None:
-    """
-    Look up *term* in UMLS via SciSpacy, then verify the match with a
-    BioLORD cosine-similarity gate.
-
-    Returns a result dict on success, or *None* if no confident match is found.
-    """
     doc = nlp(term)
     if not doc.ents:
         return None
@@ -202,10 +164,10 @@ def resolve_scispacy(term: str) -> dict | None:
         return None  # Reject low-confidence / off-topic UMLS matches
 
     return {
-        "source":         "UMLS - Scispacy",
-        "id":             concept.concept_id,
-        "name":           matched_name,
-        "vocabulary":     "UMLS",
+        "source": "UMLS - Scispacy",
+        "id": concept.concept_id,
+        "name": matched_name,
+        "vocabulary": "UMLS",
         "semantic_types": concept.types,
     }
 
@@ -215,10 +177,6 @@ def resolve_scispacy(term: str) -> dict | None:
 # ================================
 
 def resolve_term_cached(term: str, split_type: str) -> dict:
-    """
-    Resolve *term* against UMLS, using the in-memory cache to avoid
-    redundant SciSpacy calls.  Thread-safe via ENTITY_CACHE_LOCK.
-    """
     key = term.lower().strip()
 
     if key in ENTITY_CACHE:
@@ -239,16 +197,6 @@ def resolve_term_cached(term: str, split_type: str) -> dict:
 # ================================
 
 def get_partitions(words: list[str]) -> list[list[str]]:
-    """
-    Generate all sequential partitions of *words* into contiguous spans.
-
-    For efficiency, phrases longer than 7 words are returned as-is (a single
-    partition) to avoid an exponential blowup (2^(n-1) combinations).
-
-    Example::
-        get_partitions(["a", "b", "c"])
-        # → [["a", "b", "c"], ["a", "b c"], ["a b", "c"], ["a b c"]]
-    """
     if not words:
         return []
     if len(words) > 7:
@@ -267,15 +215,6 @@ def get_partitions(words: list[str]) -> list[list[str]]:
 
 
 def resolve_phrase_combinations(phrase: str, split_type: str) -> dict:
-    """
-    Build and cache partition rules for *phrase*.
-
-    All unique tokens that appear across every partition are resolved
-    concurrently via :func:`resolve_term_cached`.  The resulting rule dict
-    is written to ENTITY_RULE_CACHE in a thread-safe manner.
-
-    Returns the cached rule dict for *phrase*.
-    """
     key = phrase.lower().strip()
 
     if key in ENTITY_RULE_CACHE:
@@ -312,14 +251,6 @@ def resolve_phrase_combinations(phrase: str, split_type: str) -> dict:
 # ================================
 
 def process_single_entity(entry: dict) -> str | None:
-    """
-    Worker function executed in the thread pool for a single entity entry.
-
-    Skips measurement entities and entries whose name is empty after
-    stop-word removal.
-
-    Returns the cleaned entity name on success, or *None* if skipped.
-    """
     name       = entry.get("name", "").strip().lower()
     field_name = entry.get("field_name", "unknown")
 
@@ -339,12 +270,6 @@ def process_single_entity(entry: dict) -> str | None:
 # ================================
 
 def process_unique_entities(input_path: str) -> None:
-    """
-    Load unique entities from *input_path* and tokenize them in parallel.
-
-    Saves caches to disk every SAVE_INTERVAL processed items and once more
-    after all entities have been handled.
-    """
     load_caches()
 
     with open(input_path, "r", encoding="utf-8") as f:

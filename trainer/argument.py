@@ -6,11 +6,6 @@ from typing import Optional
 @dataclass
 class ModelArguments:
     model_name_or_path: Optional[str] = field(default="microsoft/MediPhi-Instruct")
-    model_type: Optional[str] = field(default="text", metadata={"help": "text | multimodal"})
-    processor_name_or_path: Optional[str] = field(default=None)
-    tune_mm_llm: bool = field(default=False)
-    tune_mm_mlp: bool = field(default=False)
-    tune_mm_vision: bool = field(default=False)
     
 @dataclass
 class DataArguments:

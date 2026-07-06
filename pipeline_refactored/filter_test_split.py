@@ -1,14 +1,5 @@
-"""
-Step 7 — Test Entity Cleaner
-=============================
-Removes all 'test'-split records from entity.json and entity_rule.json
-before the tokenization and embedding steps run on training data only.
-
-Usage:
-    python 7_clear_test_entities_rules.py
-"""
-
 import json
+
 from pathlib import Path
 
 # ================================
@@ -24,18 +15,6 @@ ENTITY_RULE_JSON = "entity_rule.json"
 # ================================
 
 def filter_json_inplace(path: str, split_key: str, split_value: str) -> int:
-    """
-    Load a JSON dict from *path*, remove every entry whose *split_key*
-    equals *split_value*, and write the filtered result back to the same file.
-
-    Args:
-        path:        Path to the JSON file (dict-of-dicts format).
-        split_key:   The key inside each record to inspect.
-        split_value: Records whose *split_key* equals this value are removed.
-
-    Returns:
-        Number of records removed.
-    """
     file = Path(path)
     with file.open("r", encoding="utf-8") as f:
         data: dict = json.load(f)

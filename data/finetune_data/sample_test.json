@@ -1,0 +1,159 @@
+[
+  {
+    "instruction": "Your task is extracting medical entities from a single radiology report and returning them as a strictly defined relation graph in JSON format.\n\nThe output must be a SINGLE JSON ARRAY of relation objects following this structure:\n\n```json\n[\n  {\n    \"anchor\": \"str (field:status)\",\n    \"related\": [\"str (field:status)\"]\n  }\n]\n```\n\nWhere:\n\n- \"field\" is one of: \"observation\", \"location\", \"degree\", \"trend\", \"measurement\"\n- \"status\" is: \n  - \"present\", \"absent\", or \"uncertain\" for \"observation\", \"location\", \"degree\", \"trend\" fields.\n  - \"current\" or \"old\" for \"measurement\" field.\n\nDo NOT output anything other than JSON array.\n\nGENERAL RULES\n\nOutput must be a valid SINGLE JSON array.\nUse only the report text provided.\nIf the report has Findings and Impression (or Summary, Conclusion) sections, use ONLY FINDINGS section.\nIf the report lacks Findings, use the given text.\nIgnore History, Technique, Dose, Imaging Devices, Administrative Text, and Boilerplate Parts of the report.\nDo NOT infer unstated observations, locations, degrees, trends, or measurements; extract only clinical entities explicitly mentioned in the text.\nNo grammatical, lexical transformation is permitted. DO NOT ALTER WORD FORMS in any way.\n\nENTITY FIELDS\n\nOBSERVATION\n\nAn observation is any clinically relevant Finding, Radiological Signs & Signal Alterations, Pathological Conditions & Diseases, Morphological & Structural Abnormalities, Anatomical Status, or Surgical Hardware/Procedure documented by a radiologist.\n\nFormat in graph: \"value (observation:status)\" where status is \"present\", \"absent\", or \"uncertain\".\n\nCOMPOUND OBSERVATIONS\n\nFixed clinical phrases must be extracted as a single observation entity. Do NOT split them into separate components.\n\nOBSERVATION STATUS\n\npresent: Use when the report clearly confirms the existence of an observation.\nabsent: Use when a specific observation is explicitly ruled out or negated.\nuncertain: Use when the report contains equivocal, suggestive, or non-definitive language regarding the observation\n\nLOCATION\n\nA \"location\" represents the explicit Anatomical Site, Organs and Solid Structures, Hollow Organs / Luminal Structures, Anatomical Regions, Subregions / Segments / Lobes, Vascular Structures/ Lymphatic System, Anatomical Structure, Anatomical Level, or Spatial / Directional descriptor.\n\nFormat in graph: \"value (location:status)\" where status is \"present\", \"absent\", or \"uncertain\"\n\nLOCATION STATUS\n\npresent: Use when an anatomical site is explicitly described as involved or associated with an entity.\n\nabsent: Use when a specific anatomical structure is explicitly stated to be surgically removed, not visualized, not identified, not seen etc. Do NOT extract surgically removed, not visualized, not identified, not seen phrases as observations. \n\nuncertain: Use when an anatomical site is not clearly visualized, not well delineated, poorly seen, obscured, partially visualized, indeterminate on imaging etc.\n\nDEGREES\n\nDegree stores qualifiers that characterize the Severity, Extent, Quantity, Distribution, Pattern, Appearance, Morphologic Character, Grade, Relative Laterality Comparison of an observation.\n\nFormat in graph: \"value (degree:status)\" where status is \"present\", \"absent\", or \"uncertain`.\n\nDEGREE STATUS\n\npresent: When the degree term is explicitly and affirmatively stated, and is NOT inside negation or uncertainty scope.\nabsent: When the degree qualifier itself is explicitly negated.\nuncertain: When the degree qualifier is explicitly within the scope of equivocal or hedging language.\n\nTRENDS\n\nTrend stores Stability, Progression, Temporal Status, Temporal Context, Clinical Course / Duration, Recurrent / Re-demonstration descriptors that characterize how an observation or location entity has changed over time.\n\nTREND STATUS\n\npresent: Use when a trend descriptor is explicitly stated as present.\nabsent: Use when a trend descriptor is explicitly negated.\nuncertain: Use when a trend descriptor is equivocal or uncertain.\n\nMEASUREMENTS\n\nMeasurement stores numeric values like Size, Volume, Velocity, Multi-Dimensional Size, Percentages with units that quantify an observation, location.\n\nFormat in graph: \"value (measurement:status)\" where status is \"current\" or \"old`.\n\nMEASUREMENT STATUS\n\ncurrent: Use when the measurement refers to the present study.\nold: Use when the measurement refers to a prior study or baseline value.\n\nABBREVIATIONS\n\nAbbreviations (e.g., sbo, cad, mac, ivh, sdh, edh, sah, cac, ivc) MUST be extracted exactly as written. If an abbreviation represents a pathological finding, clinical sign, or condition, extract it as an Observation. If an abbreviation represents an anatomical structure or region, extract it as a Location. Apply the standard presence/absence/uncertainty logic to the entity type.\n\nNEGATED DESCRIPTORS\n\nPhrases like \"not enlarged\", \"no change\", etc that includes negations must be extracted without the negation prefix, assigned status = \"absent\" under the appropriate field.\n\nANCHOR TYPE RESTRICTION RULE\n\nAn anchor node MUST be either: an observation OR a location (only when no observation exists in that sentence context). A trend, degree, or measurement can NEVER be used as an anchor under any circumstance. Trend, degree, or measurement values MUST NEVER be converted into observations. Additionally, an observation entity can only appear in the anchor field and must not be included in the related list.\n\nFINAL INSTRUCTION\n\nExtract medical entities from the given report and return ONLY the relation graph as a JSON array.",
+    "input": "Technique: Non-contrast images were taken in the axial plane with a section thickness of 1.5 mm. Findings: Evaluation of solid organs and major vascular structures is suboptimal due to the lack of contrast of the examination. The trachea is in the midline and both main bronchi are open. Calcific atheroma plaques are observed in the aorta and coronary arteries. Heart contour, size is normal. Pericardial effusion-thickening was not observed. Mediastinal area: Lymph nodes are observed at the aortopulmonary level, pretracheal area, and subcarinal area. The largest of these lymph nodes is in the paratracheal area and its short axis is measured as 20 mm. Calcific atheroma plaques are observed in the aorta and coronary arteries. The diameter of the descending aorta was 32 mm at its widest point. Thoracic esophageal wall thickness is normal. When examined in the lung parenchyma window; Large-scale emphysematous changes are observed, which is more prominent in the upper lobes of both lungs. Again, there are paraseptal emphysema in the lower lobes of both lungs, which are more prominent in the subpleural areas. Bronchiectasis and peribronchial thickness increases are observed in both lungs. There are sequelae pleuroparenchymal band formations in the lungs. A mosaic lung pattern, which is more prominent in the lower lobes of both lungs, is observed. Sequela fibrotic densities are observed in the left lung upper lobe lingular segment. Nonspecific pulmonary nodules are observed in both lungs, some of which are located in the subpleural region, the largest of which is 5 mm in diameter in the lateral segment of the right lung middle lobe. Upper abdominal sections included in the examination are normal. The diameter of the thoracic aorta at the inferior level was 29 mm. No fractures or lytic-sclerotic lesions were observed in bone structures. Anterior osteophytes, which tend to merge in the vertebrae, especially in the upper thoracic region, are observed. Impressions: Emphysematous changes, bronchiectatic changes, peribronchial thickness increases, linear fibrotic densities, which affect more prominently in the diffuse upper lobes, were primarily evaluated in favor of sequela changes related to the COPD process.  Density increases in depandant zones in both lungs.  Mosaic lung pattern is observed in the lower lobes of both lungs.  Thoracic aortic diameter was measured as 29 mm.",
+    "output": [
+      {
+        "anchor": "trachea (location:present)",
+        "related": []
+      },
+      {
+        "anchor": "open (observation:present)",
+        "related": [
+          "both main bronchi (location:present)"
+        ]
+      },
+      {
+        "anchor": "calcific atheroma plaques (observation:present)",
+        "related": [
+          "aorta (location:present)",
+          "coronary arteries (location:present)"
+        ]
+      },
+      {
+        "anchor": "normal (observation:present)",
+        "related": [
+          "heart (location:present)"
+        ]
+      },
+      {
+        "anchor": "pericardial effusion (observation:absent)",
+        "related": []
+      },
+      {
+        "anchor": "pericardial thickening (observation:absent)",
+        "related": []
+      },
+      {
+        "anchor": "lymph nodes (observation:present)",
+        "related": [
+          "aortopulmonary level (location:present)",
+          "pretracheal area (location:present)",
+          "subcarinal area (location:present)",
+          "paratracheal area (location:present)",
+          "20 mm (measurement:current)"
+        ]
+      },
+      {
+        "anchor": "descending aorta (location:present)",
+        "related": [
+          "32 mm (measurement:current)"
+        ]
+      },
+      {
+        "anchor": "normal (observation:present)",
+        "related": [
+          "thoracic esophageal wall (location:present)"
+        ]
+      },
+      {
+        "anchor": "emphysematous changes (observation:present)",
+        "related": [
+          "large-scale (degree:present)",
+          "upper lobes of both lungs (location:present)",
+          "more prominent (degree:present)"
+        ]
+      },
+      {
+        "anchor": "paraseptal emphysema (observation:present)",
+        "related": [
+          "again (trend:present)",
+          "lower lobes of both lungs (location:present)",
+          "more prominent (degree:present)",
+          "subpleural areas (location:present)"
+        ]
+      },
+      {
+        "anchor": "bronchiectasis (observation:present)",
+        "related": [
+          "both lungs (location:present)"
+        ]
+      },
+      {
+        "anchor": "peribronchial thickness increases (observation:present)",
+        "related": [
+          "both lungs (location:present)"
+        ]
+      },
+      {
+        "anchor": "pleuroparenchymal band formations (observation:present)",
+        "related": [
+          "sequelae (trend:present)",
+          "lungs (location:present)"
+        ]
+      },
+      {
+        "anchor": "mosaic lung pattern (observation:present)",
+        "related": [
+          "more prominent (degree:present)",
+          "lower lobes of both lungs (location:present)"
+        ]
+      },
+      {
+        "anchor": "fibrotic densities (observation:present)",
+        "related": [
+          "sequela (trend:present)",
+          "left lung upper lobe lingular segment (location:present)"
+        ]
+      },
+      {
+        "anchor": "pulmonary nodules (observation:present)",
+        "related": [
+          "nonspecific (degree:present)",
+          "both lungs (location:present)",
+          "subpleural region (location:present)",
+          "5 mm (measurement:current)",
+          "lateral segment of right lung middle lobe (location:present)"
+        ]
+      },
+      {
+        "anchor": "normal (observation:present)",
+        "related": [
+          "upper abdominal sections (location:present)"
+        ]
+      },
+      {
+        "anchor": "thoracic aorta (location:present)",
+        "related": [
+          "29 mm (measurement:current)"
+        ]
+      },
+      {
+        "anchor": "fractures (observation:absent)",
+        "related": [
+          "bone structures (location:present)"
+        ]
+      },
+      {
+        "anchor": "lytic lesions (observation:absent)",
+        "related": [
+          "bone structures (location:present)"
+        ]
+      },
+      {
+        "anchor": "sclerotic lesions (observation:absent)",
+        "related": [
+          "bone structures (location:present)"
+        ]
+      },
+      {
+        "anchor": "anterior osteophytes (observation:present)",
+        "related": [
+          "vertebrae (location:present)",
+          "upper thoracic region (location:present)",
+          "tend to merge (degree:present)"
+        ]
+      }
+    ]
+  }
+]

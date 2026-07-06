@@ -1,0 +1,457 @@
+# Medical Entity Extraction
+
+Your task is extracting medical entities from a single radiology report and returning them as a strictly defined relation graph in JSON format.
+
+## OUTPUT FORMAT (STRICT)
+
+The output must be a SINGLE JSON ARRAY of relation objects following this structure:
+
+```json
+[
+  {
+    "anchor": "str (field:status)",
+    "related": ["str (field:status)"]
+  }
+]
+```
+
+Where:
+
+- "field" is one of: "observation", "location", "degree", "trend", "measurement"
+- "status" is: 
+  - "present", "absent", or "uncertain" for "observation", "location", "degree", "trend" fields.
+  - "current" or "old" for "measurement" field.
+
+Do NOT output anything other than JSON array.
+
+## GENERAL RULES
+
+- Output must be a valid SINGLE JSON array.
+- Use only the report text provided.
+- If the report has Findings and Impression (or Summary, Conclusion) sections, use ONLY FINDINGS section.
+- If the report lacks Findings, use the given text.
+- Ignore History, Technique, Dose, Imaging Devices, Administrative Text, and Boilerplate Parts of the report.
+- Do NOT infer unstated observations, locations, degrees, trends, or measurements; extract only clinical entities explicitly mentioned in the text.
+- USE your medical expertise to accurately apply rules.
+- No grammatical, lexical transformation is permitted. DO NOT ALTER WORD FORMS in any way.
+
+## ENTITY FIELDS
+
+### OBSERVATION
+
+An observation is any clinically relevant finding, radiological sign, pathological condition, anatomical status, or surgical hardware/procedure documented by a radiologist.
+
+Format in graph: "value (observation:status)" where status is "present", "absent", or "uncertain`.
+
+#### Observation Categories:
+
+- Pathological Conditions & Diseases: cholecystitis, pneumonia, infarction, acute infarct, chronic small vessel disease etc.
+- Morphological & Structural Abnormalities: dilatation, thickening, enlargement, nodule, pulmonary nodules, lung nodules, hernia, hiatal hernia, complex ventral hernia, calcification, mitral annulus calcification, coronary artery calcifications, cyst, renal cyst, renal parapelvic cysts, diverticula, colonic diverticula, etc.
+- Radiological Signs & Signal Alterations: opacity, ground-glass opacity, hypodensity, hyperdensity, enhancement, pneumothorax, normal enhancement, enhances symmetrically, enhances normally, etc.
+- Fluid & Accumulations: ascites, effusion, pleural effusion, pericardial effusion, hemorrhage, subarachnoid hemorrhage, intracerebral hemorrhage, air, free air, fluid, free fluid, edema, hematoma, subdural hematoma, epidural hematoma, mass effect, aortic intramural hematoma etc.
+- Surgical History & Foreign Bodies: cholecystectomy clips, stent, catheter, etc.
+- Anatomical Status (Normal/Abnormal): normal, normal in course, normal in caliber, normal in size, normal size, normal caliber, normal in size, normal course, normal in configuration, symmetric in canfiguration, normal contour, symmetric configuration, unremarkable, grossly unremarkable, patent, dilated, enlarged, atrophic, sclerotic, small, large etc.
+
+#### OBSERVATION EXCLUSION RULE (STRICT)
+
+The following MUST NOT be extracted under the "observations" field:
+
+1. Standalone anatomical structures without any pathological, radiological, procedural, or status descriptor such as pancreas, adrenal glands, bladder, kidneys etc.
+2. Degree terms (severity, extent, morphology, grade, distribution, comparative expressions)
+3. Trend terms (stability, progression, interval change, temporal comparison expressions) -> "unchanged", "stable" etc.
+4. Directional or spatial terms (e.g., left, right, bilateral, anterior, posterior, superior, inferior) MUST NEVER appear within an observation, even as a compound phrase.
+
+If a term belongs to the "degrees" or "trends" schema categories, it MUST be extracted only under its correct field and NEVER as an observation.
+
+#### COMPOUND OBSERVATION RULE (STRICT)
+
+- If a radiological term is a fixed, commonly used, or clinically recognized phrase (including terms with known abbreviations), it MUST be extracted as a SINGLE observation entity.
+- DO NOT split such phrases into separate observation + location, observation + trend, observation + degree components.
+
+- Indicators of compound observations:
+  - Established medical terms (e.g., “small bowel obstruction”, “aortic dissection”)
+  - Terms with known abbreviations (e.g., SBO)
+  - Frequently co-occurring radiology phrases
+  - Phrases written together in the report that represent a single clinical observation.
+
+- The entire phrase MUST be preserved EXACTLY as written and labeled as:
+  "full phrase (observation:status)"
+
+- Under NO circumstance should parts of a compound observation be reassigned as location, degree, or separate observation entities.
+
+Examples (BUT NOT LIMITED):, "small bowel obstruction", "pleural effusion", "pericardial effusions", "ground-glass opacities", "coronary artery calcifications", "peribronchial wall thickening", "abdominal aortic aneurysm", "atherosclerotic cardiovascular disease", "complex ventral hernia", "pleural thickening", "aortic intramural hematoma", "mass effect", "midline shift", "mitral annulus calcification", "aneurysmal bone cyst", "dense deposit disease", "degenerative disc disease", "portal venous stent", "subcapsular hepatic hematoma", "embolic infarction", "aortic valve replacement", "pancreatic mass", "femoral vein catheter", "lung carcinoma", "hepatic lesion", etc.
+
+#### OBSERVATION STATUS
+
+- present: Use when the report clearly confirms the existence of an observation.
+  - Trigger terms: is seen, demonstrates, there is, present, identified, noted, shows, etc.
+- absent: Use when a specific observation is explicitly ruled out or negated.
+  - Trigger terms: "no", "without evidence of", "no evidence of", "absent", "not seen", "not identified", "not visualized", "negative for", etc.
+- uncertain: Use when the report contains equivocal, suggestive, or non-definitive language regarding the observation
+  - Trigger terms: "possible", "cannot exclude", "could be", "suspicious for", "may represent", "suggestive of", "favor", "likely", "question of", "probable", "cannot be excluded", etc.
+
+### LOCATIONS
+
+A "location" represents the explicit anatomical site, region, structure, level, or spatial descriptor. The anatomical site MUST be explicitly stated in the text.
+
+If an observation and an anatomical structure are mentioned within the same sentence, the location may be assigned based on that structure, even if not repeated for each finding.
+
+Format in graph: "value (location:status)" where status is "present", "absent", or "uncertain"
+
+Location Categories:
+
+- Organs and Solid Structures: liver, spleen, pancreas, gallbladder, kidney, left kidney, right kidney, adrenal gland, left adrenal, right adrenal, thyroid, parathyroid, prostate, uterus, ovaries, bladder, urinary bladder, brain, cerebellum, brainstem, etc.
+- Hollow Organs / Luminal Structures: esophagus, stomach, small bowel, duodenum, jejunum, ileum, colon, sigmoid colon, rectum, appendix, trachea, bronchi, etc.
+- Anatomical Regions: abdomen, pelvis, thorax, mediastinum, retroperitoneum, axilla, chest, etc.
+- Subregions / Segments / Lobes: right lower lobe, distal femur, l4-l5 level, cervical spine, hepatic dome, etc.
+- Vascular Structures/ Lymphatic System: aorta, renal artery, portal vein, mesenteric artery, ivc, sma, lymph node, mediastinal lymph nodes, hilar lymph nodes, axillary lymph nodes, mesenteric lymph nodes, retroperitoneal lymph nodes, etc.
+
+Extraction Rules:
+- REMOVE imaging-scope phrases such as "visualized portion of", "imaged portion of", "field of view", "seen on this study". EXTRACT ONLY the anatomical structure.
+
+Directional and Relational Terms — Mandatory Merging Rule
+
+All directional words MUST be merged into the location string. This includes:
+
+- Laterality: left, right, bilateral, both, etc.
+- Orientation: anterior, posterior, superior, inferior, medial, lateral, etc.
+- Axial terms: cranial, caudal, cephalad, rostral, etc.
+- Depth: superficial, deep, etc.
+- Lung-specific: apical, basal, central, peripheral, etc.
+- Positional phrases: below, above, inferior, superior, anterior, posterior, etc.
+
+Examples: "anterior bladder", "below diaphragm", "superior aortic arch", "inferior carina", "left kidney", "right lung", "both lungs", "left renal artery", "right lower lobe"
+
+#### RELATIONAL MODIFIER MERGE RULE (STRICT)
+
+Relational spatial modifiers (e.g., adjacent, perilesional, peritumoral) MUST be merged into the location string IF they directly modify an anatomical structure. They MUST NOT be classified as "degree" or "trend`.
+
+#### IMAGING TECHNIQUE / WINDOW TERMS (STRICT)
+
+Terms that refer to imaging technique, reconstruction type, or viewing parameters MUST NOT be extracted as locations. This includes expressions such as: "lung windows", "bone window", "soft tissue windows", "mediastinal windows". Ignore these phrases entirely.
+
+#### LOCATION PRECISION & FRAGMENTATION RULE (STRICT)
+
+- Core Anatomy Extraction: Extract only the primary anatomical structure and its directional qualifiers. Remove surrounding prepositional or container phrases such as "within the", "portion of", "area of", "... of".
+  - Example: "within the t10 vertebra" -> "t10 vertebra"
+- Prepositional Directional Truncation: For positional phrases, extract only the relative position and the landmark. Remove filler words like "just", "to ..." or "at the ...",.
+- Multiple Entities as Locations: If an observation is described relative to two distinct anatomical structures or another observation, extract them as separate related entries.
+
+#### LOCATION CONJUNCTION SPLIT RULE (STRICT)
+
+If multiple anatomical structures are joined by a conjunction (e.g., "and", "or") within the same location phrase, they MUST be separated into distinct location entities.
+
+- Each anatomical structure joined by a conjunction MUST be extracted individually.
+- The shared anatomical modifier MUST be preserved for each separated structure.
+- DO NOT keep conjunctive location phrases as a single string.
+
+Examples:
+
+- "intra-abdominal loops of small and large bowel"  
+  - "intra-abdominal loops of small bowel"  
+  - "intra-abdominal loops of large bowel"
+
+#### MULTIPLE LOCATIONS (MANDATORY) (STRICT)
+
+If the SAME observation (including identical degrees/modifiers) applies to multiple anatomical locations within the same sentence or coordinated phrase:
+
+- You MUST create ONLY ONE anchor for that observation.
+- ALL anatomical locations MUST be listed separately inside the SAME "related" array.
+- DO NOT duplicate the observation as multiple anchor entries.
+- DO NOT create separate anchors per location.
+- The shared degree(s) MUST appear only once within that single anchor.
+
+#### ANCHOR LOCATION RULE (STRICT)
+
+A location entity MAY serve as an anchor in the graph ONLY IF no explicit observation exists in the same context to function as anchor.
+
+- If an observation is present, the observation MUST be the anchor.
+- A location CANNOT be promoted to anchor when it is directly linked to an observation.
+- This rule applies strictly per sentence-level context.
+
+#### LOCATION STATUS
+
+- present: Use when an anatomical site is explicitly described as involved or associated with an entity.
+- absent: Use when a specific anatomical structure is explicitly stated to be surgically removed, not visualized, not identified, not seen etc. Do NOT extract surgically removed, not visualized, not identified, not seen phrases as observations. 
+- uncertain: Use when an anatomical site is not clearly visualized, not well delineated, poorly seen, obscured, partially visualized, indeterminate on imaging etc.
+
+STATUS OF OBSERVATION DOES NOT IMPLY STATUS OF THE LOCATION; LOCATION STATUS MUST BE DETERMINED ONLY BY EXPLICIT LOCATION-SPECIFIC LANGUAGE. (ULTRA-STRICT) (MANDATORY)
+
+### DEGREES
+
+Degree stores qualifiers that characterize the severity, extent, quantity, distribution, intensity, pattern, grade, or morphologic character of an observation.
+
+Format in graph: "value (degree:status)" where status is "present", "absent", or "uncertain`.
+
+Degree Categories:
+- Severity: mild, moderate, severe, minimal, significant, etc.
+- Extent / Quantity: small, large, tiny, trace, substantial, multiple, numerous, scattered, extensive, etc.
+- Distribution / Pattern: patchy, multilevel, central, etc.
+- Appearance / Morphology: dense, homogeneous, heterogeneous, hyperdense, hypodense, calcified,  cystic, fatty, necrotic, ground-glass, etc.
+- Grade: grade 1, grade 2, low-grade, high-grade, etc.
+- Certainty about characterization: benign, malignant, infectious, etc.
+
+The following MUST NOT be extracted as degree:
+
+1. Certainty / diagnostic confidence terms:
+   - suspicious, possible, probable, likely, definite, obvious, suggestive, concerning, worrisome, appreciable, etc.
+   - These terms MUST only affect observation status (present, absent, uncertain)
+
+2. Terms That Determine Positivity or Negativity:
+   - A degree term should not change whether an observation is positive or negative; it should only strengthen or weaken it. 
+   Examples:
+   - "normal enhancement" -> "normal enhancement (observation:present)"
+     (The term "normal" cannot be separated from "enhancement" because it is required to form a valid observation.)
+   - "abnormal flow signal" -> "abnormal flow signal (observation:present)"
+   - "homogeneous fluid collection" -> "fluid collection (observation:present)", "homogeneous (degree:present)"
+   - "homogeneous enhancement" -> "homogeneous enhancement (observation:present)"
+
+#### QUANTIFIED DISTRIBUTION PHRASES
+
+Phrases such as: multiple areas, multiple regions, multiple foci, multiple segments MUST be extracted under the degree field.
+
+#### RELATIVE LATERALITY COMPARISON RULE (STRICT)
+
+When a finding is described as relatively distinct on one side compared to the other (e.g., "left greater than right", "right worse", "greater on the left", "worse on the right"):
+
+- Extract the comparative phrase EXACTLY as written.
+- Classify it under the degree field.
+- DO NOT place these terms in the trend field.
+- DO NOT interpret as interval change.
+- DO NOT rewrite or normalize the phrase.
+
+Example handling: "right worse than left" -> "right worse than left (degree:present)"
+
+#### DEGREE STATUS (STRICT SCOPE-BASED RULE)
+
+Degree status MUST be determined ONLY by the textual scope governing the degree term itself. Degree status MUST NOT be inherited automatically from the observation status.
+
+- present: When the degree term is explicitly and affirmatively stated, and is NOT inside negation or uncertainty scope.
+  - Examples: "mild pleural effusion" -> "mild (degree:present)" | "large mass is identified" -> "large (degree:present)"
+- absent: ONLY when the degree qualifier itself is explicitly negated.
+  - Examples: "no large consolidation is seen" -> "large (degree:absent)" | "without significant stenosis" -> "significant (degree:absent)"
+- uncertain: When the degree qualifier is explicitly within the scope of equivocal or hedging language.
+  - Examples: "possible mild effusion" -> "mild (degree:uncertain)" | "thickening, likely benign" -> "benign (degree:uncertain)"
+
+### TRENDS
+
+Trend stores temporal comparison or interval change descriptors that characterize how an observation or location entity has changed over time.
+
+Format in graph: "value (trend:status)" where status is "present", "absent", or "uncertain"
+
+Trend Categories:
+- Stability: stable, grossly stable, unchanged, persistent, similar, etc.
+- Progression: increased, decreased, enlarged, reduced, improved, worsened, progressed, regressed, etc.
+- Temporal Status: resolved, interval increase, interval decrease, slightly increased, slightly decreased, etc.
+- Temporal Context: prior, previos, new, old etc.
+- Clinical Course / Duration: acute, subacute, chronic, acute on chronic, long-standing, recent onset, etc.
+- Recurrent / Re-demonstration: e.g. "again"
+  - DO NOT extract reporting verbs such as "noted", "seen", "identified" alone as trends.
+  - ("again seen", "again noted", "again identified") -> "again"
+
+Extraction Rules:
+- Do NOT convert trend terms into severity interpretations.
+- Do NOT include comparison reference phrases (e.g., "compared to prior", "since previous study").
+- Do NOT place trend terms into other field types such as observation, degree etc. (MANDATORY) (STRICT)
+
+#### TREND STATUS
+
+- present: Use when a trend descriptor is explicitly stated as present.
+- absent: Use when a trend descriptor is explicitly negated.
+- uncertain: Use when a trend descriptor is equivocal or uncertain.
+
+### MEASUREMENTS
+
+Measurement stores numeric values with units that quantify an observation, location.
+
+Format in graph: "value (measurement:status)" where status is "current" or "old`.
+
+Measurement Categories:
+- Size: e.g., "4 mm", "9 mm", "2.1 cm"
+- Volume: e.g., "15 cc", "30 ml"
+- Velocity: e.g., "17 cm/sec"
+- Multi-dimensional: e.g., "3.2 x 2.1 cm", "4.5 x 3.0 x 2.8 cm"
+- Percentages: e.g. %30, %50
+
+Extraction Rules:
+- Extract measurements EXACTLY as written.
+- Do NOT approximate or convert units.
+- Do NOT split numeric value and unit.
+- Do NOT include qualitative size words (these belong in degrees).
+- Do NOT include qualifiers such as "up to", "under", "less than", "approximately" or "greater than" as part of the measurement.
+- Do NOT include measurements that are not relevant to quantifying observations, such as Hounsfield Units (HU, e.g. 30 hu) or other non-dimensional technical parameters.
+- A measurement MUST NEVER be classified as a degree under any circumstance. (STRICT) (MANDATORY)
+
+### MEASUREMENT STATUS
+
+- current: Use when the measurement refers to the present study.
+- old: Use when the measurement refers to a prior study or baseline value.
+
+## ENTITY GRANULARITY AND SEPARATION
+
+- Each distinct clinical observation MUST be listed as a separate anchor entry in the graph.
+- Affirmed and negated observations MUST be listed as separate anchor entries.
+- All associated locations, degrees, trends, and measurements are linked via the "related" array.
+
+## ABBREVIATIONS
+
+Abbreviations (e.g., sbo, cad, mac, ivh, sdh, edh, sah, cac, ivc) MUST be extracted exactly as written. DO NOT expand, reinterpret, or normalize abbreviations unless the full expanded form is explicitly written in the report text. Abbreviations are treated as the value of the entity type they represent (observation, location, etc.).
+
+Extraction Rules:
+- If an abbreviation represents a pathological finding, clinical sign, or condition, extract it as an Observation.
+- If an abbreviation represents an anatomical structure or region, extract it as a Location.
+- Apply the standard presence/absence/uncertainty logic to the entity type.
+
+## NEGATED DESCRIPTOR TRANSFORMATION RULE (MANDATORY) (STRICT)
+
+- Phrases containing negated descriptors: "not enlarged", "not dilated", "no increase", "non-hermorrhagice", "non-calcified", "nonspecific", "nondistended", "non opacification", "non-obstructive", "nondependantly", "nonpathologically", "non-displaced" etc.
+
+MUST be transformed as follows:
+
+- Remove the negation term
+- Assign status = "absent" under the appropriate schema field
+
+## ENTITY ORDER PRESERVATION RULE (MANDATORY) (STRICT)
+
+- Entities MUST be extracted strictly in the exact sequential order they appear in the report text.
+- No reordering is allowed based synonymy, abbreviation, or semantic similarity.
+- Additionally, all items inside each "related" array MUST follow the exact textual order in which they appear in the sentence. (STRICT) (MANDATORY)
+- Reordering by field type (location, degree, trend, measurement) or structural preference is STRICTLY FORBIDDEN. (STRICT) (MANDATORY)
+
+## ANCHOR TYPE RESTRICTION RULE (MANDATORY) (STRICT)
+
+- An anchor node MUST be either: an observation OR a location (only when no observation exists in that sentence context)
+
+- A trend, degree, or measurement can NEVER be used as an anchor under any circumstance.
+- Trend, degree, or measurement values MUST NEVER be converted into observations. (STRICT)
+
+- If a trend, degree, or measurement appears without an explicit observation, DO NOT promote it to anchor. (STRICT)
+- Anchors are STRICTLY LIMITED to "observation" and conditionally to "location" (per Anchor Location Rule).
+
+This restriction is ABSOLUTE and OVERRIDES any structural interpretation.
+
+## ANCHOR–RELATED NON-REPETITION RULE (STRICT) (MANDATORY)
+
+- Any word or meaningful part of the "anchor" MUST NOT be repeated in the "related" array.
+- If a term is already included in the anchor, do NOT extract any part of that term again as a related entity.
+- 
+- This includes:
+  - Direct repetition of the same word
+  - Different forms of the same word (e.g., singular/plural, variants)
+  - Parts of a combined or compound phrase
+
+- Compound observation phrases MUST be treated as a single unit. Do NOT break them apart into smaller related entities.
+- Only include related entities that are completely independent and do not overlap with the anchor.
+
+### Examples:
+
+Bilateral calcified pleural plaques are noted.
+
+Incorrect:
+{
+  "anchor": "pleural plaques (observation:present)",
+  "related": [
+    "calcified (degree:present)",
+    "bilateral pleura (location:present)"
+  ]
+}
+
+Correct:
+{
+  "anchor": "pleural plaques (observation:present)",
+  "related": [
+    "calcified (degree:present)",
+    "bilateral (location:present)"
+  ]
+}
+
+Findings consistent with tumor thrombus.
+
+Incorrect:
+{
+  "anchor": "tumor thrombus (observation:uncertain)",
+  "related": [
+    "thrombus (location:present)"
+  ]
+}
+
+Correct:
+{
+  "anchor": "tumor thrombus (observation:uncertain)",
+  "related": []
+}
+
+### SLASH ("/") SEPARATION RULE (MANDATORY) (STRICT)
+
+When two or more clinical terms are separated by "/" (slash), they MUST be treated as DISTINCT and INDEPENDENT entities.
+
+- Each term MUST be extracted separately under its appropriate field (observation, degree, etc.).
+- DO NOT merge slash-separated terms into a single entity.
+- DO NOT interpret "/" as part of a compound phrase.
+- Each separated term MUST receive its own status based on the same contextual scope.
+
+- "Ovaries cannot be evaluated secondary to the intra-abdominal fluid / hemorrhage":  "fluid (observation:present)", "hemorrhage (observation:present)"
+
+- "in addition to residual / recurrent neoplasm": "residual (trend:present)", "recurrent (trend:present)", "neoplasm (observation:uncertain)"
+
+- This finding is concerning for infection / phlegonous changes: "infection (observation:uncertain)", "phlegmonous changes (observation:uncertain)"
+
+## OBSERVATION USED AS LOCATION (CONTAINMENT / WITHIN RELATION)
+
+
+When an observation is explicitly located within another observation (i.e., one pathological entity spatially contains another):
+
+- The contained observation MUST be the main anchor.
+- The containing observation MUST be extracted as a separate anchor using: "location:status"
+- The location:status MUST also appear inside the contained observation’s "related" array.
+- The location:status inside the primary anchor MUST NOT contain its degrees, trends, or measurements.
+- The location:status MUST be defined again as a separate anchor entry.
+- In its own anchor definition, it may contain:
+  - Its own degrees
+  - Its own trends
+  - Its own measurements
+  - Its own location entities
+
+STRUCTURE FORMAT (MANDATORY)
+
+Contained observation (primary):
+
+```json
+{
+  "anchor": "container_observation (observation:status)",
+  "related": [
+    "location (location:status)",
+    "degree (degree:status)",
+    "trend (trend:status)",
+    "measurement (measurement:current|old)"
+  ]
+},
+{
+  "anchor": "contained_observation (observation:status)",
+  "related": [
+    "location (location:status)",
+    "degree (degree:status)",
+    "container_observation (location:status)"
+  ]
+}
+```
+
+CRITICAL RULES:
+
+1. The container_observation (location:status) MUST always be a separate anchor entry.
+2. The container_observation (location:status) inside the primary anchor MUST NOT carry degree, trend, or measurement.
+3. The container anchor MUST contain its own explicit modifiers.
+4. Strict ENTITY ORDER PRESERVATION applies.
+
+## OBSERVATION-IN-RELATED PROHIBITION RULE (STRICT)
+
+- An observation entity MUST NEVER appear in the "related" array under any circumstance.
+- The "related" array is strictly limited to: location, degree, trend, and measurement entities only.
+- Any observation identified in the text MUST be represented as a separate anchor entry.
+- Violating this rule is strictly forbidden.
+
+## FINAL INSTRUCTION
+
+Extract medical entities from the given report and return ONLY the relation graph as a JSON array:
+
+{report}

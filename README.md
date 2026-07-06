@@ -1,24 +1,13 @@
-# **LGELCM (LLM-Guided Entity-Level Clinical Metric)**
+# **CIFRCE: Clinical Information-aware Flexible Radiology Report Comparison and Evaluation**
 
-## **Project Overview**
+## **General Pipeline**
 
-<!-- TODO -->
+![alt text](assets/image_1.png)
 
-## **Data Sources**
+## **Entity Decomposition**
 
-<!-- TODO -->
+![alt text](assets/image_2.png)
 
-## **Environment Setup**
+## **Flexible Evaluation Match**
 
-1. **Create and Activate Virtual Environment**
-   - `python3 -m venv venv`
-   - `source venv/bin/activate`
-
-2. **Upgrade pip**
-   - `pip install --upgrade pip setuptools wheel`
-
-3. **Install PyTorch and torchvision**
-   - `pip install torch==2.6.0+cu121 --index-url https://download.pytorch.org/whl/cu121`
-
-4. **Install Other Dependencies**
-    - `pip -q install -r requirements.txt`
+![alt text](assets/image_3.png)

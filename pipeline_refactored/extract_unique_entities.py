@@ -1,141 +1,115 @@
-"""
-Step 8 — Unique Entity Extractor
-==================================
-Reads *test_results_rate_eval_task2.json*, parses every anchor and related
-text from both gt_entities and pred_entities, skips measurement fields,
-and writes a frequency-sorted list of unique entities to
-*unique_entity_counts_test.json*.
-
-Usage:
-    python 8_unique_entity_extractor_production.py
-"""
-
+import argparse
 import json
 import re
+from collections import defaultdict
 from pathlib import Path
 
-# ================================
-# CONFIGURATION
-# ================================
+ENTITY_PATTERN = re.compile(r"^(.*)\(([^()]+):([^()]+)\)\s*$")
 
-INPUT_FILE  = "test_results_rate_eval_task2.json"
-OUTPUT_FILE = "unique_entity_counts_test.json"
-TARGET_KEYS = ["gt_entities", "pred_entities"]
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input_file", default="test_results.json")
+    parser.add_argument("--output_file", type=str, default="unique_entity_counts_test.json")
+    parser.add_argument("--gt_key", default="gt_entities")
+    parser.add_argument("--pred_key", default="pred_entities")
+    return parser.parse_args()
 
-
-# ================================
-# I/O HELPERS
-# ================================
-
-def load_data(filepath: str) -> list:
-    """Load a JSON array from *filepath* and print the record count."""
-    with open(filepath, encoding="utf-8") as f:
+def load_data(path: Path) -> list:
+    with path.open(encoding="utf-8") as f:
         data = json.load(f)
     print(f"Total loaded samples: {len(data)}")
     return data
 
 
-def save_unique_entity_counts(entity_stats: dict) -> None:
-    """Sort entries by count (desc) then field name (asc) and write to OUTPUT_FILE."""
-    sorted_stats = sorted(
-        entity_stats.values(),
-        key=lambda x: (-x["count"], x["field_name"]),
-    )
-    output_data = [
-        {
-            "name":       s["name"],
-            "field_name": s["field_name"],
-            "count":      s["count"],
-        }
-        for s in sorted_stats
-    ]
-
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        json.dump(output_data, f, ensure_ascii=False, indent=2)
-
-    print("\n" + "=" * 40)
-    print(f"Unique entities found : {len(output_data)}")
-    print("=" * 40)
-
-
-# ================================
-# PARSING
-# ================================
-
-def parse_entity_text(text: str) -> dict | None:
-    """
-    Parse a raw entity string of the form::
-
-        Some Entity Name (field_name:status)
-
-    Returns a dict with ``name`` and ``field_name`` keys (both lower-cased),
-    or *None* when the pattern does not match.
-    """
-    match = re.search(r'^(.*)\(([^()]+):([^()]+)\)\s*$', text.strip())
-    if not match:
+def parse_entity(text: str) -> tuple[str, str] | None:
+    match = ENTITY_PATTERN.match(text.strip())
+    if match is None:
         return None
-    return {
-        "name":       match.group(1).strip().lower(),
-        "field_name": match.group(2).strip().lower(),
-    }
+    return (
+        match.group(1).strip().lower(),
+        match.group(2).strip().lower(),
+    )
 
 
-# ================================
-# CORE LOGIC
-# ================================
+def iter_entity_texts(
+    record: dict,
+    gt_key: str,
+    pred_key: str,
+):
+    for key in (gt_key, pred_key):
+        for entity in record.get(key, []):
+            yield entity.get("anchor", "")
+            yield from entity.get("related", [])
 
-def collect_entity_stats(data: list) -> dict:
-    """
-    Walk every record in *data*, extract anchor + related texts from
-    TARGET_KEYS (gt_entities and pred_entities), and accumulate per-entity
-    occurrence counts.
 
-    Measurement entities are skipped.
-
-    Returns:
-        A dict keyed by lower-cased entity name, each value containing
-        ``raw_text``, ``name``, ``field_name``, and ``count``.
-    """
-    entity_stats: dict[str, dict] = {}
+def collect_entity_stats(
+    data: list,
+    gt_key: str,
+    pred_key: str,
+) -> dict:
+    stats = defaultdict(
+        lambda: {
+            "name": "",
+            "field_name": "",
+            "count": 0,
+        }
+    )
 
     for record in data:
-        for key_name in TARGET_KEYS:
-            for entity in record.get(key_name, []):
-                raw_texts = [entity.get("anchor", "")] + entity.get("related", [])
+        for text in iter_entity_texts(record, gt_key, pred_key):
+            if not text:
+                continue
 
-                for raw in raw_texts:
-                    if not raw:
-                        continue
+            parsed = parse_entity(text)
+            if parsed is None:
+                continue
 
-                    parsed = parse_entity_text(raw)
-                    if parsed is None or parsed["field_name"] == "measurement":
-                        continue
+            name, field_name = parsed
 
-                    key = parsed["name"]
-                    if key not in entity_stats:
-                        entity_stats[key] = {
-                            "raw_text":   raw.strip(),
-                            "name":       parsed["name"],
-                            "field_name": parsed["field_name"],
-                            "count":      0,
-                        }
-                    entity_stats[key]["count"] += 1
+            if field_name == "measurement":
+                continue
 
-    return entity_stats
+            stats[name]["name"] = name
+            stats[name]["field_name"] = field_name
+            stats[name]["count"] += 1
+
+    return stats
 
 
-# ================================
-# MAIN
-# ================================
+def save_entity_stats(
+    stats: dict,
+    output_path: Path,
+) -> None:
+    output = sorted(
+        stats.values(),
+        key=lambda item: (-item["count"], item["field_name"]),
+    )
+
+    with output_path.open("w", encoding="utf-8") as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+
+    print(f"Unique entities found: {len(output)}")
+
 
 def main() -> None:
-    if not Path(INPUT_FILE).exists():
-        raise FileNotFoundError(f"Input file not found: {INPUT_FILE}")
+    args = parse_args()
 
-    data         = load_data(INPUT_FILE)
-    entity_stats = collect_entity_stats(data)
-    save_unique_entity_counts(entity_stats)
+    input_path = Path(args.input_file)
+    if not input_path.exists():
+        raise FileNotFoundError(f"Input file not found: {input_path}")
 
+    data = load_data(args.input_file)
+
+    stats = collect_entity_stats(
+        data,
+        gt_key=args.gt_key,
+        pred_key=args.pred_key,
+    )
+
+    save_entity_stats(
+        stats,
+        Path(args.output_file),
+    )
 
 if __name__ == "__main__":
     main()

@@ -77,7 +77,7 @@ def text_sft_collate_fn(
         "labels": labels,
     }
 
-# --- pickle edilebilir DataCollator sınıfı (top-level) ---
+# --- Pickle-able DataCollator sınıfı (top-level) ---
 class DataCollatorForSFT:
     """
     Pickle-able data collator that wraps text_sft_collate_fn with a tokenizer and max_length.
