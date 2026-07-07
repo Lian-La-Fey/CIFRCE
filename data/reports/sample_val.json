@@ -1,0 +1,9 @@
+[
+    {
+        "id": "valid_4_b",
+        "volume_name": "valid_4_b_1.nii.gz",
+        "report": "Technique: Non-contrast images were taken in the axial plane with a section thickness of 1.5 mm. Findings: Trachea, both main bronchi are open. Mediastinal main vascular structures, heart contour, size are normal. Thoracic aorta diameter is normal. Pericardial effusion-thickening was not observed. Thoracic esophagus calibration was normal and no significant tumoral wall thickening was detected. Lymph nodes with a short axis reaching 1 cm in the mediastinum appear stable. The pleural effusion present in the right hemithorax is stable. When examined in the lung parenchyma window; Pleuroparenchymal opacities starting from the central and extending to the pleura in the lower lobes of both lungs, significant thickening of the bronchial wall, and the mass appearance of the left lower lobe bronchi are stable. Hypodense lesions suspicious for liver metastasis and increased size in the liver entering the cross-section area have a stable appearance. In the right adrenal gland genus, the 28x17 mm lesion suspicious for metastasis is stable. The left adrenal glands were normal and no space-occupying lesion was detected. Bone structures in the study area are natural. Vertebral corpus heights are preserved. No significant difference was observed between the studies. Impressions: Stable mass surrounding the bronchi of the lower lobe of the left lung.  Pleuroparenchymal opacities with bronchial pleural extension in the bilateral lower lobes, thickening of the bronchial wall, nonspecific ground glass densities, and right pleural effusion.  Multiple mass lesions in the liver suspicious for metastases and hepatomegaly.  Suspected right adrenal metastatic lesion.  Stable lymph nodes in the mediastinum.",
+        "dataset": "ct_rate",
+        "split": "val"
+    }
+]

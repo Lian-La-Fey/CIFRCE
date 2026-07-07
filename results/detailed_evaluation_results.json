@@ -1,0 +1,1615 @@
+[
+  {
+    "order": 1,
+    "type": "CTA-CORONARY",
+    "gt_report": "As compared to the previous examination, ground-glass density peribronchial nodules have newly occurred in the right and left upper lobe (4, 17), in the middle lobe (4, 37), in the right lower lobe (4, 47), and in the right lower lobe (4, 50).  The distribution and morphology of the lesion suggests an infectious cause.  There is a large hiatal hernia.  Extensive coronary calcification.  Unchanged aspect of pre-existing subpleural bilateral bullae.  The pre-existing areas of parenchymal scarring are unchanged.  At the site of surgery, notably along the staple line, there is no evidence for local recurrence.  In the imaged parts of the abdomen, there is no evidence of adrenal lesions.  Status post cholecystectomy.",
+    "prediction": "Lung nodules include a 6-mm nodule in the subpleural region of the right lower lobe (4.235), 4 mm in the right middle lobe (4.215), and 3 mm in the left upper lobe (4.158) are stable since the prior CT in ___ with no new nodules or consolidation.  No pathological enlargement of mediastinal or axillary lymph nodes by CT size criteria.  The pulmonary artery, aorta and heart size are normal with no pericardial effusion.  Calcification at the origin of the LAD is unchanged since ___.  This study was not sesigned to evaluate the upper abdomen which appears unremarkable.  moderate degenerative changes are throughout the lower thoracic spine without destructive or sclerotic bone lesions.",
+    "Score": 1.0,
+    "source_file": "rate_eval_task2_test.json",
+    "gt_raw_output": "[{\"anchor\": \"ground-glass density peribronchial nodules (observation:present)\", \"related\": [\"newly (trend:present)\", \"right upper lobe (location:present)\", \"left upper lobe (location:present)\", \"middle lobe (location:present)\", \"right lower lobe (location:present)\", \"right lower lobe (location:present)\"]}, {\"anchor\": \"infectious cause (observation:uncertain)\", \"related\": []}, {\"anchor\": \"hiatal hernia (observation:present)\", \"related\": [\"large (degree:present)\"]}, {\"anchor\": \"coronary calcification (observation:present)\", \"related\": [\"extensive (degree:present)\"]}, {\"anchor\": \"subpleural bullae (observation:present)\", \"related\": [\"unchanged (trend:present)\", \"bilateral (location:present)\"]}, {\"anchor\": \"parenchymal scarring (observation:present)\", \"related\": [\"unchanged (trend:present)\"]}, {\"anchor\": \"local recurrence (observation:absent)\", \"related\": [\"surgery site (location:present)\", \"staple line (location:present)\"]}, {\"anchor\": \"adrenal lesions (observation:absent)\", \"related\": [\"abdomen (location:present)\"]}, {\"anchor\": \"cholecystectomy (observation:present)\", \"related\": [\"status post (trend:present)\"]}]",
+    "gt_entities": [
+      {
+        "anchor": "ground-glass density peribronchial nodules (observation:present)",
+        "related": [
+          "newly (trend:present)",
+          "right upper lobe (location:present)",
+          "left upper lobe (location:present)",
+          "middle lobe (location:present)",
+          "right lower lobe (location:present)",
+          "right lower lobe (location:present)"
+        ]
+      },
+      {
+        "anchor": "infectious cause (observation:uncertain)",
+        "related": []
+      },
+      {
+        "anchor": "hiatal hernia (observation:present)",
+        "related": [
+          "large (degree:present)"
+        ]
+      },
+      {
+        "anchor": "coronary calcification (observation:present)",
+        "related": [
+          "extensive (degree:present)"
+        ]
+      },
+      {
+        "anchor": "subpleural bullae (observation:present)",
+        "related": [
+          "unchanged (trend:present)",
+          "bilateral (location:present)"
+        ]
+      },
+      {
+        "anchor": "parenchymal scarring (observation:present)",
+        "related": [
+          "unchanged (trend:present)"
+        ]
+      },
+      {
+        "anchor": "local recurrence (observation:absent)",
+        "related": [
+          "surgery site (location:present)",
+          "staple line (location:present)"
+        ]
+      },
+      {
+        "anchor": "adrenal lesions (observation:absent)",
+        "related": [
+          "abdomen (location:present)"
+        ]
+      },
+      {
+        "anchor": "cholecystectomy (observation:present)",
+        "related": [
+          "status post (trend:present)"
+        ]
+      }
+    ],
+    "pred_raw_output": "[{\"anchor\": \"nodule (observation:present)\", \"related\": [\"6-mm (measurement:current)\", \"subpleural region of the right lower lobe (location:present)\", \"stable (trend:present)\"]}, {\"anchor\": \"nodule (observation:present)\", \"related\": [\"4 mm (measurement:current)\", \"right middle lobe (location:present)\", \"stable (trend:present)\"]}, {\"anchor\": \"nodule (observation:present)\", \"related\": [\"3 mm (measurement:current)\", \"left upper lobe (location:present)\", \"stable (trend:present)\"]}, {\"anchor\": \"nodules (observation:absent)\", \"related\": [\"new (trend:absent)\"]}, {\"anchor\": \"consolidation (observation:absent)\", \"related\": []}, {\"anchor\": \"enlargement (observation:absent)\", \"related\": [\"pathological (degree:absent)\", \"mediastinal lymph nodes (location:present)\", \"axillary lymph nodes (location:present)\"]}, {\"anchor\": \"normal (observation:present)\", \"related\": [\"pulmonary artery (location:present)\", \"aorta (location:present)\", \"heart (location:present)\"]}, {\"anchor\": \"pericardial effusion (observation:absent)\", \"related\": []}, {\"anchor\": \"calcification (observation:present)\", \"related\": [\"origin of the LAD (location:present)\", \"unchanged (trend:present)\"]}, {\"anchor\": \"unremarkable (observation:present)\", \"related\": [\"upper abdomen (location:present)\"]}, {\"anchor\": \"degenerative changes (observation:present)\", \"related\": [\"moderate (degree:present)\", \"lower thoracic spine (location:present)\"]}, {\"anchor\": \"destructive bone lesions (observation:absent)\", \"related\": []}, {\"anchor\": \"sclerotic bone lesions (observation:absent)\", \"related\": []}]",
+    "pred_entities": [
+      {
+        "anchor": "nodule (observation:present)",
+        "related": [
+          "6-mm (measurement:current)",
+          "subpleural region of the right lower lobe (location:present)",
+          "stable (trend:present)"
+        ]
+      },
+      {
+        "anchor": "nodule (observation:present)",
+        "related": [
+          "4 mm (measurement:current)",
+          "right middle lobe (location:present)",
+          "stable (trend:present)"
+        ]
+      },
+      {
+        "anchor": "nodule (observation:present)",
+        "related": [
+          "3 mm (measurement:current)",
+          "left upper lobe (location:present)",
+          "stable (trend:present)"
+        ]
+      },
+      {
+        "anchor": "nodules (observation:absent)",
+        "related": [
+          "new (trend:absent)"
+        ]
+      },
+      {
+        "anchor": "consolidation (observation:absent)",
+        "related": []
+      },
+      {
+        "anchor": "enlargement (observation:absent)",
+        "related": [
+          "pathological (degree:absent)",
+          "mediastinal lymph nodes (location:present)",
+          "axillary lymph nodes (location:present)"
+        ]
+      },
+      {
+        "anchor": "normal (observation:present)",
+        "related": [
+          "pulmonary artery (location:present)",
+          "aorta (location:present)",
+          "heart (location:present)"
+        ]
+      },
+      {
+        "anchor": "pericardial effusion (observation:absent)",
+        "related": []
+      },
+      {
+        "anchor": "calcification (observation:present)",
+        "related": [
+          "origin of the LAD (location:present)",
+          "unchanged (trend:present)"
+        ]
+      },
+      {
+        "anchor": "unremarkable (observation:present)",
+        "related": [
+          "upper abdomen (location:present)"
+        ]
+      },
+      {
+        "anchor": "degenerative changes (observation:present)",
+        "related": [
+          "moderate (degree:present)",
+          "lower thoracic spine (location:present)"
+        ]
+      },
+      {
+        "anchor": "destructive bone lesions (observation:absent)",
+        "related": []
+      },
+      {
+        "anchor": "sclerotic bone lesions (observation:absent)",
+        "related": []
+      }
+    ],
+    "evaluation_results": {
+      "observation": {
+        "ground_truth": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "gt_0_anchor",
+              "value": "ground-glass density peribronchial nodules",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_1_anchor",
+              "value": "infectious cause",
+              "field": "observation",
+              "status": "uncertain",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_2_anchor",
+              "value": "hiatal hernia",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_3_anchor",
+              "value": "coronary calcification",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_4_anchor",
+              "value": "subpleural bullae",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_5_anchor",
+              "value": "parenchymal scarring",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_6_anchor",
+              "value": "local recurrence",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_7_anchor",
+              "value": "adrenal lesions",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_8_anchor",
+              "value": "cholecystectomy",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        },
+        "prediction": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "pred_0_anchor",
+              "value": "nodule",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_1_anchor",
+              "value": "nodule",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_2_anchor",
+              "value": "nodule",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_3_anchor",
+              "value": "nodules",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_4_anchor",
+              "value": "consolidation",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_5_anchor",
+              "value": "enlargement",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_6_anchor",
+              "value": "normal",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_7_anchor",
+              "value": "pericardial effusion",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_8_anchor",
+              "value": "calcification",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_9_anchor",
+              "value": "unremarkable",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_10_anchor",
+              "value": "degenerative changes",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_11_anchor",
+              "value": "destructive bone lesions",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_12_anchor",
+              "value": "sclerotic bone lesions",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        }
+      },
+      "location": {
+        "ground_truth": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "gt_0_rel_1",
+              "value": "right upper lobe",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_0_rel_2",
+              "value": "left upper lobe",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_0_rel_3",
+              "value": "middle lobe",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_0_rel_4",
+              "value": "right lower lobe",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_0_rel_5",
+              "value": "right lower lobe",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_4_rel_1",
+              "value": "bilateral",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_6_rel_0",
+              "value": "surgery site",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_6_rel_1",
+              "value": "staple line",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_7_rel_0",
+              "value": "abdomen",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        },
+        "prediction": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "pred_0_rel_1",
+              "value": "subpleural region of the right lower lobe",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_1_rel_1",
+              "value": "right middle lobe",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_2_rel_1",
+              "value": "left upper lobe",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_5_rel_1",
+              "value": "mediastinal lymph nodes",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_5_rel_2",
+              "value": "axillary lymph nodes",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_6_rel_0",
+              "value": "pulmonary artery",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_6_rel_1",
+              "value": "aorta",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_6_rel_2",
+              "value": "heart",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_8_rel_0",
+              "value": "origin of the lad",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_9_rel_0",
+              "value": "upper abdomen",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_10_rel_1",
+              "value": "lower thoracic spine",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        }
+      },
+      "degree": {
+        "ground_truth": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "gt_2_rel_0",
+              "value": "large",
+              "field": "degree",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_3_rel_0",
+              "value": "extensive",
+              "field": "degree",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        },
+        "prediction": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "pred_5_rel_0",
+              "value": "pathological",
+              "field": "degree",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_10_rel_0",
+              "value": "moderate",
+              "field": "degree",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        }
+      },
+      "trend": {
+        "ground_truth": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "gt_0_rel_0",
+              "value": "newly",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_4_rel_0",
+              "value": "unchanged",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_5_rel_0",
+              "value": "unchanged",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_8_rel_0",
+              "value": "status post",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        },
+        "prediction": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "pred_0_rel_2",
+              "value": "stable",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_1_rel_2",
+              "value": "stable",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_2_rel_2",
+              "value": "stable",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_3_rel_0",
+              "value": "new",
+              "field": "trend",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_8_rel_1",
+              "value": "unchanged",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "order": 0,
+    "type": "CTA-CORONARY",
+    "gt_report": "There are bilateral pleural effusions which have increased significantly in size when compared to the prior study.  There is associated atelectasis of both lower lobes.  The aerated pulmonary parenchyma is unremarkable with no suspicious lesions identified.  The large airways are patent without evidence of an obstructive lesion.  There is global cardiomegaly with significant coronary artery and mitral anulus calcification.  The pulmonary arteries are enlarged suggestive of pulmonary hypertension.  There is significant calcification of the thoracic aorta.  No aneurysm.  No pathologically enlarged axillary, hilar or mediastinal lymphadenopathy.    There is pneumobilia within the liver, this was evident on the prior study.  There is moderate sized hiatus hernia.  The upper abdominal viscera are otherwise unremarkable on this non dedicated study.  There is a significant kyphoscoliosis, no destructive bone lesion.",
+    "prediction": "The visualized portion of the thyroid appears unremarkable.  There is no axillary, hilar or mediastinal lymphadenopathy.  The aorta is normal in caliber as is the pulmonary arterial trunk.  There is no pericardial or pleural effusion.  The tracheobronchial tree is patent to the subsegmental level.  The lungs demonstrate a reticular pattern densities along with areas of ground-glass opacity and bronchiectasis that affects the bases more than the apices.  Subpleural bullae are present, more prominent in the apices.  The previously described area of right apical consolidation has near-completely resolved.  No appreciable air trapping is noted.  The extent of disease is similar to prior exams.  Post-right lower lobe wedge resection changes are noted.  The visualized portion of the upper abdomen is unremarkable.  The bones demonstrate degenerative changes of thoracic spine but no aggressive appearing lytic or sclerotic lesions.",
+    "Score": 1.0,
+    "source_file": "rate_eval_task2_test.json",
+    "gt_raw_output": "[{\"anchor\": \"pleural effusions (observation:present)\", \"related\": [\"bilateral (location:present)\", \"increased significantly (trend:present)\"]}, {\"anchor\": \"atelectasis (observation:present)\", \"related\": [\"both lower lobes (location:present)\"]}, {\"anchor\": \"unremarkable (observation:present)\", \"related\": [\"aerated pulmonary parenchyma (location:present)\"]}, {\"anchor\": \"suspicious lesions (observation:absent)\", \"related\": [\"aerated pulmonary parenchyma (location:present)\"]}, {\"anchor\": \"patent (observation:present)\", \"related\": [\"large airways (location:present)\"]}, {\"anchor\": \"obstructive lesion (observation:absent)\", \"related\": [\"large airways (location:present)\"]}, {\"anchor\": \"cardiomegaly (observation:present)\", \"related\": [\"global (degree:present)\"]}, {\"anchor\": \"calcification (observation:present)\", \"related\": [\"significant (degree:present)\", \"coronary artery anulus (location:present)\", \"mitral anulus (location:present)\"]}, {\"anchor\": \"enlarged (observation:present)\", \"related\": [\"pulmonary arteries (location:present)\"]}, {\"anchor\": \"pulmonary hypertension (observation:uncertain)\", \"related\": [\"pulmonary arteries (location:present)\"]}, {\"anchor\": \"calcification (observation:present)\", \"related\": [\"significant (degree:present)\", \"thoracic aorta (location:present)\"]}, {\"anchor\": \"aneurysm (observation:absent)\", \"related\": []}, {\"anchor\": \"lymphadenopathy (observation:absent)\", \"related\": [\"pathologically enlarged (degree:absent)\", \"axillary (location:present)\", \"hilar (location:present)\", \"mediastinal (location:present)\"]}, {\"anchor\": \"pneumobilia (observation:present)\", \"related\": [\"liver (location:present)\", \"prior (trend:present)\"]}, {\"anchor\": \"hiatus hernia (observation:present)\", \"related\": [\"moderate sized (degree:present)\"]}, {\"anchor\": \"unremarkable (observation:present)\", \"related\": [\"upper abdominal viscera (location:present)\"]}, {\"anchor\": \"kyphoscoliosis (observation:present)\", \"related\": [\"significant (degree:present)\"]}, {\"anchor\": \"destructive bone lesion (observation:absent)\", \"related\": []}]",
+    "gt_entities": [
+      {
+        "anchor": "pleural effusions (observation:present)",
+        "related": [
+          "bilateral (location:present)",
+          "increased significantly (trend:present)"
+        ]
+      },
+      {
+        "anchor": "atelectasis (observation:present)",
+        "related": [
+          "both lower lobes (location:present)"
+        ]
+      },
+      {
+        "anchor": "unremarkable (observation:present)",
+        "related": [
+          "aerated pulmonary parenchyma (location:present)"
+        ]
+      },
+      {
+        "anchor": "suspicious lesions (observation:absent)",
+        "related": [
+          "aerated pulmonary parenchyma (location:present)"
+        ]
+      },
+      {
+        "anchor": "patent (observation:present)",
+        "related": [
+          "large airways (location:present)"
+        ]
+      },
+      {
+        "anchor": "obstructive lesion (observation:absent)",
+        "related": [
+          "large airways (location:present)"
+        ]
+      },
+      {
+        "anchor": "cardiomegaly (observation:present)",
+        "related": [
+          "global (degree:present)"
+        ]
+      },
+      {
+        "anchor": "calcification (observation:present)",
+        "related": [
+          "significant (degree:present)",
+          "coronary artery anulus (location:present)",
+          "mitral anulus (location:present)"
+        ]
+      },
+      {
+        "anchor": "enlarged (observation:present)",
+        "related": [
+          "pulmonary arteries (location:present)"
+        ]
+      },
+      {
+        "anchor": "pulmonary hypertension (observation:uncertain)",
+        "related": [
+          "pulmonary arteries (location:present)"
+        ]
+      },
+      {
+        "anchor": "calcification (observation:present)",
+        "related": [
+          "significant (degree:present)",
+          "thoracic aorta (location:present)"
+        ]
+      },
+      {
+        "anchor": "aneurysm (observation:absent)",
+        "related": []
+      },
+      {
+        "anchor": "lymphadenopathy (observation:absent)",
+        "related": [
+          "pathologically enlarged (degree:absent)",
+          "axillary (location:present)",
+          "hilar (location:present)",
+          "mediastinal (location:present)"
+        ]
+      },
+      {
+        "anchor": "pneumobilia (observation:present)",
+        "related": [
+          "liver (location:present)",
+          "prior (trend:present)"
+        ]
+      },
+      {
+        "anchor": "hiatus hernia (observation:present)",
+        "related": [
+          "moderate sized (degree:present)"
+        ]
+      },
+      {
+        "anchor": "unremarkable (observation:present)",
+        "related": [
+          "upper abdominal viscera (location:present)"
+        ]
+      },
+      {
+        "anchor": "kyphoscoliosis (observation:present)",
+        "related": [
+          "significant (degree:present)"
+        ]
+      },
+      {
+        "anchor": "destructive bone lesion (observation:absent)",
+        "related": []
+      }
+    ],
+    "pred_raw_output": "[{\"anchor\": \"unremarkable (observation:present)\", \"related\": [\"thyroid (location:present)\"]}, {\"anchor\": \"lymphadenopathy (observation:absent)\", \"related\": [\"axillary (location:present)\", \"hilar (location:present)\", \"mediastinal (location:present)\"]}, {\"anchor\": \"normal in caliber (observation:present)\", \"related\": [\"aorta (location:present)\", \"pulmonary arterial trunk (location:present)\"]}, {\"anchor\": \"effusion (observation:absent)\", \"related\": [\"pericardial (location:present)\", \"pleural (location:present)\"]}, {\"anchor\": \"patent (observation:present)\", \"related\": [\"tracheobronchial tree (location:present)\", \"subsegmental level (location:present)\"]}, {\"anchor\": \"reticular pattern densities (observation:present)\", \"related\": [\"lungs (location:present)\"]}, {\"anchor\": \"ground-glass opacity (observation:present)\", \"related\": [\"lungs (location:present)\", \"bases (location:present)\", \"apices (location:present)\"]}, {\"anchor\": \"bronchiectasis (observation:present)\", \"related\": [\"lungs (location:present)\", \"bases (location:present)\", \"apices (location:present)\"]}, {\"anchor\": \"subpleural bullae (observation:present)\", \"related\": [\"apices (location:present)\", \"more prominent (degree:present)\"]}, {\"anchor\": \"consolidation (observation:absent)\", \"related\": [\"right apical (location:present)\", \"near-completely resolved (trend:present)\"]}, {\"anchor\": \"air trapping (observation:absent)\", \"related\": [\"appreciable (degree:absent)\"]}, {\"anchor\": \"changes (observation:present)\", \"related\": [\"post-right lower lobe wedge resection (location:present)\"]}, {\"anchor\": \"unremarkable (observation:present)\", \"related\": [\"upper abdomen (location:present)\"]}, {\"anchor\": \"degenerative changes (observation:present)\", \"related\": [\"thoracic spine (location:present)\"]}, {\"anchor\": \"lytic lesions (observation:absent)\", \"related\": [\"aggressive appearing (degree:absent)\"]}, {\"anchor\": \"sclerotic lesions (observation:absent)\", \"related\": [\"aggressive appearing (degree:absent)\"]}]",
+    "pred_entities": [
+      {
+        "anchor": "unremarkable (observation:present)",
+        "related": [
+          "thyroid (location:present)"
+        ]
+      },
+      {
+        "anchor": "lymphadenopathy (observation:absent)",
+        "related": [
+          "axillary (location:present)",
+          "hilar (location:present)",
+          "mediastinal (location:present)"
+        ]
+      },
+      {
+        "anchor": "normal in caliber (observation:present)",
+        "related": [
+          "aorta (location:present)",
+          "pulmonary arterial trunk (location:present)"
+        ]
+      },
+      {
+        "anchor": "effusion (observation:absent)",
+        "related": [
+          "pericardial (location:present)",
+          "pleural (location:present)"
+        ]
+      },
+      {
+        "anchor": "patent (observation:present)",
+        "related": [
+          "tracheobronchial tree (location:present)",
+          "subsegmental level (location:present)"
+        ]
+      },
+      {
+        "anchor": "reticular pattern densities (observation:present)",
+        "related": [
+          "lungs (location:present)"
+        ]
+      },
+      {
+        "anchor": "ground-glass opacity (observation:present)",
+        "related": [
+          "lungs (location:present)",
+          "bases (location:present)",
+          "apices (location:present)"
+        ]
+      },
+      {
+        "anchor": "bronchiectasis (observation:present)",
+        "related": [
+          "lungs (location:present)",
+          "bases (location:present)",
+          "apices (location:present)"
+        ]
+      },
+      {
+        "anchor": "subpleural bullae (observation:present)",
+        "related": [
+          "apices (location:present)",
+          "more prominent (degree:present)"
+        ]
+      },
+      {
+        "anchor": "consolidation (observation:absent)",
+        "related": [
+          "right apical (location:present)",
+          "near-completely resolved (trend:present)"
+        ]
+      },
+      {
+        "anchor": "air trapping (observation:absent)",
+        "related": [
+          "appreciable (degree:absent)"
+        ]
+      },
+      {
+        "anchor": "changes (observation:present)",
+        "related": [
+          "post-right lower lobe wedge resection (location:present)"
+        ]
+      },
+      {
+        "anchor": "unremarkable (observation:present)",
+        "related": [
+          "upper abdomen (location:present)"
+        ]
+      },
+      {
+        "anchor": "degenerative changes (observation:present)",
+        "related": [
+          "thoracic spine (location:present)"
+        ]
+      },
+      {
+        "anchor": "lytic lesions (observation:absent)",
+        "related": [
+          "aggressive appearing (degree:absent)"
+        ]
+      },
+      {
+        "anchor": "sclerotic lesions (observation:absent)",
+        "related": [
+          "aggressive appearing (degree:absent)"
+        ]
+      }
+    ],
+    "evaluation_results": {
+      "observation": {
+        "ground_truth": {
+          "matched": [
+            {
+              "eid": "gt_2_anchor",
+              "value": "unremarkable",
+              "field": "observation",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "gt_4_anchor",
+              "value": "patent",
+              "field": "observation",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "gt_12_anchor",
+              "value": "lymphadenopathy",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": true,
+              "match_type": "flexible_expanded_embed"
+            },
+            {
+              "eid": "gt_15_anchor",
+              "value": "unremarkable",
+              "field": "observation",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "gt_17_anchor",
+              "value": "destructive bone lesion",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": true,
+              "match_type": "flexible_expanded_embed"
+            }
+          ],
+          "unmatched": [
+            {
+              "eid": "gt_0_anchor",
+              "value": "pleural effusions",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_1_anchor",
+              "value": "atelectasis",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_3_anchor",
+              "value": "suspicious lesions",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_5_anchor",
+              "value": "obstructive lesion",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_6_anchor",
+              "value": "cardiomegaly",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_7_anchor",
+              "value": "calcification",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_8_anchor",
+              "value": "enlarged",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_9_anchor",
+              "value": "pulmonary hypertension",
+              "field": "observation",
+              "status": "uncertain",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_10_anchor",
+              "value": "calcification",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_11_anchor",
+              "value": "aneurysm",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_13_anchor",
+              "value": "pneumobilia",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_14_anchor",
+              "value": "hiatus hernia",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_16_anchor",
+              "value": "kyphoscoliosis",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        },
+        "prediction": {
+          "matched": [
+            {
+              "eid": "pred_0_anchor",
+              "value": "unremarkable",
+              "field": "observation",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "pred_1_anchor",
+              "value": "lymphadenopathy",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": true,
+              "match_type": "flexible_expanded_embed"
+            },
+            {
+              "eid": "pred_4_anchor",
+              "value": "patent",
+              "field": "observation",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "pred_12_anchor",
+              "value": "unremarkable",
+              "field": "observation",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "pred_14_anchor",
+              "value": "lytic lesions",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": true,
+              "match_type": "flexible_expanded_cui"
+            }
+          ],
+          "unmatched": [
+            {
+              "eid": "pred_2_anchor",
+              "value": "normal in caliber",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_3_anchor",
+              "value": "effusion",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_5_anchor",
+              "value": "reticular pattern densities",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_6_anchor",
+              "value": "ground-glass opacity",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_7_anchor",
+              "value": "bronchiectasis",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_8_anchor",
+              "value": "subpleural bullae",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_9_anchor",
+              "value": "consolidation",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_10_anchor",
+              "value": "air trapping",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_11_anchor",
+              "value": "changes",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_13_anchor",
+              "value": "degenerative changes",
+              "field": "observation",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_15_anchor",
+              "value": "sclerotic lesions",
+              "field": "observation",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        }
+      },
+      "location": {
+        "ground_truth": {
+          "matched": [
+            {
+              "eid": "gt_12_rel_1",
+              "value": "axillary",
+              "field": "location",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "gt_12_rel_3",
+              "value": "mediastinal",
+              "field": "location",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "gt_15_rel_0",
+              "value": "upper abdominal viscera",
+              "field": "location",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            }
+          ],
+          "unmatched": [
+            {
+              "eid": "gt_0_rel_0",
+              "value": "bilateral",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_1_rel_0",
+              "value": "both lower lobes",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_2_rel_0",
+              "value": "aerated pulmonary parenchyma",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_3_rel_0",
+              "value": "aerated pulmonary parenchyma",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_4_rel_0",
+              "value": "large airways",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_5_rel_0",
+              "value": "large airways",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_7_rel_1",
+              "value": "coronary artery anulus",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_7_rel_2",
+              "value": "mitral anulus",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_8_rel_0",
+              "value": "pulmonary arteries",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_9_rel_0",
+              "value": "pulmonary arteries",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_10_rel_1",
+              "value": "thoracic aorta",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_12_rel_2",
+              "value": "hilar",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_13_rel_0",
+              "value": "liver",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        },
+        "prediction": {
+          "matched": [
+            {
+              "eid": "pred_1_rel_0",
+              "value": "axillary",
+              "field": "location",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "pred_1_rel_2",
+              "value": "mediastinal",
+              "field": "location",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "pred_3_rel_1",
+              "value": "pleural",
+              "field": "location",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            },
+            {
+              "eid": "pred_12_rel_0",
+              "value": "upper abdomen",
+              "field": "location",
+              "status": "present",
+              "is_matched": true,
+              "match_type": "flexible_expanded_embed"
+            }
+          ],
+          "unmatched": [
+            {
+              "eid": "pred_0_rel_0",
+              "value": "thyroid",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_1_rel_1",
+              "value": "hilar",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_2_rel_0",
+              "value": "aorta",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_2_rel_1",
+              "value": "pulmonary arterial trunk",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_3_rel_0",
+              "value": "pericardial",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_4_rel_0",
+              "value": "tracheobronchial tree",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_4_rel_1",
+              "value": "subsegmental level",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_5_rel_0",
+              "value": "lungs",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_6_rel_0",
+              "value": "lungs",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_6_rel_1",
+              "value": "bases",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_6_rel_2",
+              "value": "apices",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_7_rel_0",
+              "value": "lungs",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_7_rel_1",
+              "value": "bases",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_7_rel_2",
+              "value": "apices",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_8_rel_0",
+              "value": "apices",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_9_rel_0",
+              "value": "right apical",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_11_rel_0",
+              "value": "post-right lower lobe wedge resection",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_13_rel_0",
+              "value": "thoracic spine",
+              "field": "location",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        }
+      },
+      "degree": {
+        "ground_truth": {
+          "matched": [
+            {
+              "eid": "gt_12_rel_0",
+              "value": "pathologically enlarged",
+              "field": "degree",
+              "status": "absent",
+              "is_matched": true,
+              "match_type": "flexible_direct"
+            }
+          ],
+          "unmatched": [
+            {
+              "eid": "gt_6_rel_0",
+              "value": "global",
+              "field": "degree",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_7_rel_0",
+              "value": "significant",
+              "field": "degree",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_10_rel_0",
+              "value": "significant",
+              "field": "degree",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_14_rel_0",
+              "value": "moderate sized",
+              "field": "degree",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_16_rel_0",
+              "value": "significant",
+              "field": "degree",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        },
+        "prediction": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "pred_8_rel_1",
+              "value": "more prominent",
+              "field": "degree",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_10_rel_0",
+              "value": "appreciable",
+              "field": "degree",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_14_rel_0",
+              "value": "aggressive appearing",
+              "field": "degree",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "pred_15_rel_0",
+              "value": "aggressive appearing",
+              "field": "degree",
+              "status": "absent",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        }
+      },
+      "trend": {
+        "ground_truth": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "gt_0_rel_1",
+              "value": "increased significantly",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            },
+            {
+              "eid": "gt_13_rel_1",
+              "value": "prior",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        },
+        "prediction": {
+          "matched": [],
+          "unmatched": [
+            {
+              "eid": "pred_9_rel_1",
+              "value": "near-completely resolved",
+              "field": "trend",
+              "status": "present",
+              "is_matched": false,
+              "match_type": ""
+            }
+          ]
+        }
+      }
+    }
+  }
+]

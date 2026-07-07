@@ -1,3 +1,4 @@
+import argparse
 import json
 import threading
 
@@ -12,28 +13,99 @@ from sentence_transformers import SentenceTransformer, util
 from tqdm import tqdm
 
 # ================================
-# CONFIGURATION
+# ARGUMENT PARSING
 # ================================
 
-INPUT_JSON       = "unique_entity_counts_test.json"
-ENTITY_JSON      = "entity.json"
-ENTITY_RULE_JSON = "entity_rule.json"
+def parse_args():
+    parser = argparse.ArgumentParser()
 
-SPACY_MODEL_NAME    = "en_core_sci_md"
-EMBEDDING_MODEL_NAME = "FremyCompany/BioLORD-2023-M"
-UMLS_THRESHOLD      = 0.95   # SciSpacy linker candidate threshold
-UMLS_TOP_K          = 20     # SciSpacy linker top-k candidates
-MATCH_THRESHOLD     = 0.9125 # Minimum cosine similarity to accept a UMLS match
+    parser.add_argument(
+        "--input_json",
+        default="unique_entity_counts_test.json",
+    )
 
-MAX_WORKERS   = 8
-SAVE_INTERVAL = 1000
+    parser.add_argument(
+        "--entity_json",
+        default="entity.json",
+        help="Entity cache file.",
+    )
+
+    parser.add_argument(
+        "--entity_rule_json",
+        default="entity_rule.json",
+        help="Entity Decomposition rule cache file.",
+    )
+
+    parser.add_argument(
+        "--spacy_model",
+        default="en_core_sci_md",
+        help="SciSpacy model name.",
+    )
+
+    parser.add_argument(
+        "--embedding_model",
+        default="FremyCompany/BioLORD-2023-M",
+        help="SentenceTransformer model.",
+    )
+
+    parser.add_argument(
+        "--umls_threshold",
+        type=float,
+        default=0.95,
+        help="SciSpacy linker candidate threshold.",
+    )
+
+    parser.add_argument(
+        "--umls_top_k",
+        type=int,
+        default=20,
+        help="Number of linker candidates.",
+    )
+
+    parser.add_argument(
+        "--match_threshold",
+        type=float,
+        default=0.9125,
+        help="Minimum cosine similarity.",
+    )
+
+    parser.add_argument(
+        "--max_workers",
+        type=int,
+        default=4,
+        help="Maximum number of worker threads.",
+    )
+
+    parser.add_argument(
+        "--save_interval",
+        type=int,
+        default=1000,
+        help="Save caches every N processed entities.",
+    )
+
+    return parser.parse_args()
+
+args = parse_args()
+
+INPUT_JSON = args.input_json
+ENTITY_JSON = args.entity_json
+ENTITY_RULE_JSON = args.entity_rule_json
+
+SPACY_MODEL_NAME = args.spacy_model
+EMBEDDING_MODEL_NAME = args.embedding_model
+
+UMLS_THRESHOLD = args.umls_threshold
+UMLS_TOP_K = args.umls_top_k
+MATCH_THRESHOLD = args.match_threshold
+
+MAX_WORKERS = args.max_workers
+SAVE_INTERVAL = args.save_interval
 
 STOP_WORDS = {
     "of", "the", "a", "an", "in", "on", "at", "to", "for",
     "with", "by", "from", "and", "or", "is", "are", "was",
     "were", "be", "been", "into", "within", "without", "as",
 }
-
 
 # ================================
 # GLOBAL STATE  (models + caches)
@@ -302,7 +374,7 @@ def process_unique_entities(input_path: str) -> None:
     print(f"Entity cache: {len(ENTITY_CACHE)} | Rule cache: {len(ENTITY_RULE_CACHE)}")
 
 
-def main() -> None:
+def main():
     process_unique_entities(INPUT_JSON)
 
 

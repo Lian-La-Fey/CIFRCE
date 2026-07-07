@@ -1,0 +1,9 @@
+[
+    {
+        "id": "valid_14_a",
+        "volume_name": "valid_14_a_1.nii.gz",
+        "report": "Technique: Sections were taken without contrast medium and there were no reconstructions at the workstation. Findings: Trachea and both main bronchi are open. No occlusive pathology was detected in the trachea and both main bronchi. Ground-glass appearances are observed in both lungs, especially in the lower lobes, especially in the peripheral areas. Ground-glass appearances are accompanied by linear density increases in peripheral areas parallel to the pleura. The described findings are the findings frequently observed in Covid-19 pneumonia. No mass was detected in both lungs. There are emphysematous changes in both lungs. Mediastinal structures cannot be evaluated optimally because contrast material is not given. As far as can be observed: The heart is larger than normal. No pleural or pericardial effusion was detected. Diffuse atheroma plaques are observed in the aorta and coronary arteries. There are lymph nodes in the mediastinum and hilar regions. The largest of the described lymph nodes is observed in the subcarinal area, measuring 14 mm in short diameter. There is no pathological wall thickness increase in the esophagus within the sections. No upper abdominal free fluid-collection or pathologically enlarged lymph nodes were observed in the sections. No fractures or lytic-destructive lesions were detected in the bone structures within the sections. Impressions: Findings evaluated in favor of viral pneumonia in both lungs.",
+        "dataset": "ct_rate",
+        "split": "test"
+    }
+]

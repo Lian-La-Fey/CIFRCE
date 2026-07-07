@@ -1,29 +1,27 @@
 import argparse
 import json
 import re
-
-from glob import glob
 from pathlib import Path
+from tqdm import tqdm
 
 import torch
-
 from accelerate import Accelerator
 from accelerate.utils import gather_object
 from peft import PeftModel
-from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 def parse_args():
     parser = argparse.ArgumentParser("LoRA Finetuned LLM - Inference")
     parser.add_argument("--model_path", type=str, default="microsoft/MediPhi-Instruct")
-    parser.add_argument("--adapter_path", type=str, default="./checkpoints/checkpoint-1142")
+    parser.add_argument("--adapter_path", type=str, default="./checkpoint-1142")
     
-    parser.add_argument("--prompt_file", type=str, default="./data/finetuning_prompt.txt")
-    parser.add_argument("--output_file", type=str, default="./results/test_results.json")
-    parser.add_argument("--test_input_glob", type=str, default="./data/**/*test.json")
+    parser.add_argument("--test_input", type=str, default="./sample_reports.json")
+    parser.add_argument("--output_file", type=str, default="./results/sample_reports_test_results.json")
     parser.add_argument("--ground_truth_key", type=str, default="ground_truth")
     parser.add_argument("--prediction_key", type=str, default="prediction")
+    
+    parser.add_argument("--prompt_file", type=str, default="./data/finetuning_prompt.txt")
     
     parser.add_argument("--max_input_length", type=int, default=8192)
     parser.add_argument("--max_new_tokens", type=int, default=4096)
@@ -62,15 +60,13 @@ def load_model(
 def load_system_prompt(prompt_file: str) -> str:
     return Path(prompt_file).read_text(encoding="utf-8").strip()
 
-def load_test_samples(test_input_glob: str):
-    samples = []
-    for file_path in glob(test_input_glob):
-        data = json.loads(Path(file_path).read_text(encoding="utf-8"))
-        for item in data:
-            if "source_file" not in item:
-                item["source_file"] = Path(file_path).name
-            samples.append(item)
-    return samples
+def load_test_samples(test_input: str):
+    file_path = Path(test_input)
+    if not file_path.exists():
+        raise FileNotFoundError(f"Test file couldn't be found: {test_input}")
+    with file_path.open("r", encoding="utf-8") as file:
+        data = json.load(file)  
+    return data
 
 
 def build_prompt(text: str, system_prompt: str, tokenizer: AutoTokenizer) -> str:
@@ -241,7 +237,7 @@ def main() -> None:
     tokenizer = load_tokenizer(args.adapter_path)
     model = load_model(args.model_path, args.adapter_path, tokenizer, accelerator)
     system_prompt = load_system_prompt(args.prompt_file)
-    all_samples = load_test_samples(args.test_input_glob)
+    all_samples = load_test_samples(args.test_input)
 
     if accelerator.is_main_process:
         print(f"Total samples  : {len(all_samples)}")

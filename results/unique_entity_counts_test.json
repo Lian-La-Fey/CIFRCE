@@ -1,0 +1,522 @@
+[
+  {
+    "name": "unremarkable",
+    "field_name": "observation",
+    "count": 5
+  },
+  {
+    "name": "significant",
+    "field_name": "degree",
+    "count": 3
+  },
+  {
+    "name": "lungs",
+    "field_name": "location",
+    "count": 3
+  },
+  {
+    "name": "apices",
+    "field_name": "location",
+    "count": 3
+  },
+  {
+    "name": "calcification",
+    "field_name": "observation",
+    "count": 3
+  },
+  {
+    "name": "nodule",
+    "field_name": "observation",
+    "count": 3
+  },
+  {
+    "name": "unchanged",
+    "field_name": "trend",
+    "count": 3
+  },
+  {
+    "name": "stable",
+    "field_name": "trend",
+    "count": 3
+  },
+  {
+    "name": "aggressive appearing",
+    "field_name": "degree",
+    "count": 2
+  },
+  {
+    "name": "bilateral",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "aerated pulmonary parenchyma",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "large airways",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "pulmonary arteries",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "axillary",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "hilar",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "mediastinal",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "aorta",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "bases",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "upper abdomen",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "left upper lobe",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "right lower lobe",
+    "field_name": "location",
+    "count": 2
+  },
+  {
+    "name": "patent",
+    "field_name": "observation",
+    "count": 2
+  },
+  {
+    "name": "lymphadenopathy",
+    "field_name": "observation",
+    "count": 2
+  },
+  {
+    "name": "subpleural bullae",
+    "field_name": "observation",
+    "count": 2
+  },
+  {
+    "name": "consolidation",
+    "field_name": "observation",
+    "count": 2
+  },
+  {
+    "name": "degenerative changes",
+    "field_name": "observation",
+    "count": 2
+  },
+  {
+    "name": "global",
+    "field_name": "degree",
+    "count": 1
+  },
+  {
+    "name": "pathologically enlarged",
+    "field_name": "degree",
+    "count": 1
+  },
+  {
+    "name": "moderate sized",
+    "field_name": "degree",
+    "count": 1
+  },
+  {
+    "name": "more prominent",
+    "field_name": "degree",
+    "count": 1
+  },
+  {
+    "name": "appreciable",
+    "field_name": "degree",
+    "count": 1
+  },
+  {
+    "name": "large",
+    "field_name": "degree",
+    "count": 1
+  },
+  {
+    "name": "extensive",
+    "field_name": "degree",
+    "count": 1
+  },
+  {
+    "name": "pathological",
+    "field_name": "degree",
+    "count": 1
+  },
+  {
+    "name": "moderate",
+    "field_name": "degree",
+    "count": 1
+  },
+  {
+    "name": "both lower lobes",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "coronary artery anulus",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "mitral anulus",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "thoracic aorta",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "liver",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "upper abdominal viscera",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "thyroid",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "pulmonary arterial trunk",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "pericardial",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "pleural",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "tracheobronchial tree",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "subsegmental level",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "right apical",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "post-right lower lobe wedge resection",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "thoracic spine",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "right upper lobe",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "middle lobe",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "surgery site",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "staple line",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "abdomen",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "subpleural region of the right lower lobe",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "right middle lobe",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "mediastinal lymph nodes",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "axillary lymph nodes",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "pulmonary artery",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "heart",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "origin of the lad",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "lower thoracic spine",
+    "field_name": "location",
+    "count": 1
+  },
+  {
+    "name": "pleural effusions",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "atelectasis",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "suspicious lesions",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "obstructive lesion",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "cardiomegaly",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "enlarged",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "pulmonary hypertension",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "aneurysm",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "pneumobilia",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "hiatus hernia",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "kyphoscoliosis",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "destructive bone lesion",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "normal in caliber",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "effusion",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "reticular pattern densities",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "ground-glass opacity",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "bronchiectasis",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "air trapping",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "changes",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "lytic lesions",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "sclerotic lesions",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "ground-glass density peribronchial nodules",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "infectious cause",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "hiatal hernia",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "coronary calcification",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "parenchymal scarring",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "local recurrence",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "adrenal lesions",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "cholecystectomy",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "nodules",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "enlargement",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "normal",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "pericardial effusion",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "destructive bone lesions",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "sclerotic bone lesions",
+    "field_name": "observation",
+    "count": 1
+  },
+  {
+    "name": "increased significantly",
+    "field_name": "trend",
+    "count": 1
+  },
+  {
+    "name": "prior",
+    "field_name": "trend",
+    "count": 1
+  },
+  {
+    "name": "near-completely resolved",
+    "field_name": "trend",
+    "count": 1
+  },
+  {
+    "name": "newly",
+    "field_name": "trend",
+    "count": 1
+  },
+  {
+    "name": "status post",
+    "field_name": "trend",
+    "count": 1
+  },
+  {
+    "name": "new",
+    "field_name": "trend",
+    "count": 1
+  }
+]

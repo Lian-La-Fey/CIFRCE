@@ -98,7 +98,7 @@ def main() -> None:
     if not input_path.exists():
         raise FileNotFoundError(f"Input file not found: {input_path}")
 
-    data = load_data(args.input_file)
+    data = load_data(input_path)
 
     stats = collect_entity_stats(
         data,

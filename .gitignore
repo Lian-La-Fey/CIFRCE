@@ -207,3 +207,11 @@ marimo/_lsp/
 __marimo__/
 
 *.zip
+
+flexible_evaluation_pipeline/entity.json
+flexible_evaluation_pipeline/entity_rule.json
+flexible_evaluation_pipeline/embedding_synonyms.json
+flexible_evaluation_pipeline/embeddings_cache.pkl
+flexible_evaluation_pipeline/medical_abbreviations_dictionary_normalized.json
+flexible_evaluation_pipeline/umls_cui_synonyms.json
+flexible_evaluation_pipeline/umls_synonyms.json

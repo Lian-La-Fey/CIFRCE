@@ -1,3 +1,4 @@
+import argparse
 import json
 import re
 
@@ -12,16 +13,6 @@ from tqdm import tqdm
 # CONFIGURATION
 # ================================
 
-INPUT_JSON = "test_results_rate_eval_task2.json"
-ENTITY_JSON = "entity.json"
-ENTITY_RULE_JSON = "entity_rule.json"
-UMLS_CUI_SYNONYMS_JSON = "umls_cui_synonyms.json"
-EMBED_SYNONYMS_JSON = "embedding_synonyms.json"
-ABBREV_JSON = "medical_abbreviations_dictionary_normalized.json"
-
-OUTPUT_JSON = "detailed_evaluation_results.json"
-NUM_WORKERS = 2
-
 SEMANTIC_FIELDS = ["observation", "location", "degree", "trend"]
 
 STOP_WORDS = {
@@ -29,6 +20,52 @@ STOP_WORDS = {
     "with", "by", "from", "and", "or", "is", "are", "was",
     "were", "be", "been", "into", "within", "without", "as",
 }
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "--input_json",
+        default="../results/sample_reports_test_results.json",
+    )
+
+    parser.add_argument(
+        "--entity_json",
+        default="entity.json"
+    )
+
+    parser.add_argument(
+        "--entity_rule_json",
+        default="entity_rule.json"
+    )
+
+    parser.add_argument(
+        "--umls_cui_synonyms_json",
+        default="umls_cui_synonyms.json"
+    )
+
+    parser.add_argument(
+        "--embed_synonyms_json",
+        default="embedding_synonyms.json"
+    )
+
+    parser.add_argument(
+        "--abbrev_json",
+        default="medical_abbreviations_dictionary_normalized.json"
+    )
+
+    parser.add_argument(
+        "--output_json",
+        default="../results/detailed_evaluation_results.json"
+    )
+
+    parser.add_argument(
+        "--num_workers",
+        type=int,
+        default=2
+    )
+
+    return parser.parse_args()
 
 
 # ================================
@@ -102,20 +139,19 @@ class FastPool:
 # ================================
 
 def _load_json(path: str):
-    """Load and return the contents of a JSON file."""
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
 
-def load_all() -> None:
-    """Populate all global caches from disk.  Must be called before any matching."""
+def load_all(args):
     global INPUT_DATA, ENTITY_CACHE, ENTITY_RULE, UMLS_CUI_SYNONYMS, EMBED_SYNONYMS, ABBREV
-    INPUT_DATA        = _load_json(INPUT_JSON)
-    ENTITY_CACHE      = _load_json(ENTITY_JSON)
-    ENTITY_RULE       = _load_json(ENTITY_RULE_JSON)
-    UMLS_CUI_SYNONYMS = _load_json(UMLS_CUI_SYNONYMS_JSON)
-    EMBED_SYNONYMS    = _load_json(EMBED_SYNONYMS_JSON)
-    ABBREV            = _load_json(ABBREV_JSON)
+    
+    INPUT_DATA = _load_json(args.input_json)
+    ENTITY_CACHE = _load_json(args.entity_json)
+    ENTITY_RULE = _load_json(args.entity_rule_json)
+    UMLS_CUI_SYNONYMS = _load_json(args.umls_cui_synonyms_json)
+    EMBED_SYNONYMS = _load_json(args.embed_synonyms_json)
+    ABBREV = _load_json(args.abbrev_json)
 
 
 # ================================
@@ -749,9 +785,8 @@ def entity_to_dict(ent: Entity) -> dict:
     }
 
 
-def init_worker() -> None:
-    """Process-pool initialiser: load all caches once per worker process."""
-    load_all()
+def init_worker(args) -> None:
+    load_all(args)
 
 
 def process_single_report(report: dict) -> dict:
@@ -802,13 +837,19 @@ def process_single_report(report: dict) -> dict:
 # MAIN
 # ================================
 
-def main() -> None:
-    load_all()
+def main():
+    args = parse_args()
 
-    print(f"Processing {len(INPUT_DATA)} reports with {NUM_WORKERS} worker(s)...")
+    load_all(args)
+
+    print(f"Processing {len(INPUT_DATA)} reports with {args.num_workers} worker(s)...")
     detailed_results: list = []
 
-    with ProcessPoolExecutor(max_workers=NUM_WORKERS, initializer=init_worker) as executor:
+    with ProcessPoolExecutor(
+        max_workers=args.num_workers,
+        initializer=init_worker,
+        initargs=(args,),
+    ) as executor:
         futures = {
             executor.submit(process_single_report, report): report
             for report in INPUT_DATA
@@ -819,10 +860,10 @@ def main() -> None:
             except Exception as exc:
                 print(f"[Error] Report processing failed: {exc}")
 
-    with open(OUTPUT_JSON, "w", encoding="utf-8") as out_file:
+    with open(args.output_json, "w", encoding="utf-8") as out_file:
         json.dump(detailed_results, out_file, ensure_ascii=False, indent=2)
 
-    print(f"\nDone! Results saved to '{OUTPUT_JSON}'.")
+    print(f"\nDone! Results saved to '{args.output_json}'.")
 
 
 if __name__ == "__main__":
